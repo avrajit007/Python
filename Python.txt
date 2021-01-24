@@ -12,7 +12,7 @@ name[2]                             #returns 'r'
 name.upper                          #for upper-case
 name[-3]                            #returns 'j', shows 3rd letter from the last
 
-mylist = [30, 20, "avra"]           #list named as 'mylist' created
+mylist = [30, 20, "avra"]           #LIST named as 'mylist' created, 3rd bracket signifies list
 print(mylist)
 mylist[1]                           #returns 20, as in python index starts from '0'                       
 mylist[1] = 99                      #replace 20 by 99
@@ -20,3 +20,33 @@ print(mylist)                       #output: 30, 99, 'avra'
 mylist.append(10)                   #adds '10' at the end of the list, if printed shows 30, 99, 'avra', 10
 mylist.insert (2, 1000)             #inserts '1000' in the 3rd position
 mylist.reverse()                    #to get mirror image of the list
+
+dictionary_course = {1: "Python",
+                     2: "R",
+                     3: "SQL"}      
+
+print(dictionary_course)                     #DICTIONARY created in the name of 'dictionary_course', 2nd bracket for dictionary
+dictionary_course[1]                         #returns 'Python'
+dictionary_course.get(1)                     #returns 'Python
+dictionary_course[4] = "Hadoop"              #adds 'Hadoop' in the 4th position of the dictionary
+
+tuple_animal = (10, 20, "tiger", "lion", "tiger", "cat")              #TUPLE named 'tuple_animal' created
+tuple_animal.count("tiger")                                           #returns 2
+
+myset = {10, 20, 30, "tiger", "cat", 10}                              #created a set named 'myset', for set 2nd bracket is required
+print(myset)                                                          #returns (20, 'tiger', 10, 'cat', 30)
+
+#TYPE CONVERSION
+int()                             #changes any datatype to 'integer'
+float()                           #changes any datatype to 'float'
+str()                             #changes any datatype to 'charecter string'
+tuple()                           #changes any datatype to 'tuple'
+list()                            #changes any datatype to 'list'
+set()                             #changes any datatype to 'set'
+dict()                            #changes any datatype to 'dictionary'
+
+#example
+x2 = 12
+name = "avrajit"
+print (str(x2) + name)            #returns '12avrajit'
+
