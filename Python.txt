@@ -50,3 +50,29 @@ x2 = 12
 name = "avrajit"
 print (str(x2) + name)            #returns '12avrajit'
 
+#COLLECTIONS in Python
+from collections import namedtuple                              #implementing a namedtuple
+ax = namedtuple("courses", "course_name, software")             #'course_name' not 'course name' else error
+sx = ax("data science", "python")
+print(sx)                                                       #returns 'courses(course name="datascience", software="python)'
+
+from collections import namedtuple                              #implementing namedtuple from a list
+ax = namedtuple("courses", "course_name, software")
+sy = ax._make(["artificial I", "python"])                       #3rd bracket means list
+print(sy)                                                       #'underscore' before 'make' is mandatory, returns 'courses(course name="artificial I", software="python)'
+
+from collections import deque                                   #implementing deque
+ax1 = ["v", "r", "a", "j"]                                      #list created in the name of 'ax1'
+sx1 = deque(ax1)                                                #coverting list into deque
+print(sx1)                                                      #returns 'deque("v", "r", "a", "j")
+sx1.append("i")                                                 #adds "i" at the end of the deque
+sx1.appendleft("a")                                             #adds "a" in the begining
+sx1.pop()                                                       #removes "i" from the end
+sx1.popleft()                                                   #removes "a" from the begining
+
+from collections import ChainMap                                #python is case sensitive, so write 'ChainMap' carefully
+ax2 = {1:"avra",2:"deepu"}                                      
+ay2 = {3:"soumava", 4:"ankana"}                                 #2 dictionaries named ax2 & ay2 were created
+sx2 = ChainMap(ax2, ay2)                                        #ChainMapped them into one
+print(sx2)
+
