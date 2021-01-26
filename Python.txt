@@ -71,7 +71,7 @@ sx1.pop()                                                       #removes "i" fro
 sx1.popleft()                                                   #removes "a" from the begining
 
 from collections import ChainMap                                #python is case sensitive, so write 'ChainMap' carefully
-ax2 = {1:"avra",2:"deepu"}                                      
+ax2 = {1:"avra", 2:"deepu"}                                      
 ay2 = {3:"soumava", 4:"ankana"}                                 #2 dictionaries named ax2 & ay2 were created
 sx2 = ChainMap(ax2, ay2)                                        #ChainMapped them into one
 print(sx2)
