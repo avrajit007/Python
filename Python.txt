@@ -99,3 +99,42 @@ print(dx)
 print(dx.keys())                                                #returns 'odict_keys([1, 2, 3, 4, 5, 6, 7])'
 print(dx.items())                                               #returns 'odict_items([(1, 'a'), (2, 'v'), (3, 'r'), (4, 'a'), (5, 'j'), (6, 'i'), (7, 't')])'
 
+from collections import defaultdict                             #implementing defaultdict
+dx2 = defaultdict(int)
+dx2[1] = "python"
+dx2[2] = "R"
+print(dx2)                                                      #returns 'defaultdict(<class 'int'>, {1: 'python', 2: 'R'})'
+print(dx2[3])                                                   #returns '0', as 'dx2' has no input. normal dictionary would show an error message instead
+
+#ARRAYS (like vector in 'R', 3 methods are there)
+import array                                                    #method 1
+ax4 = array.array("i", [1,2,3,4,5,6])                           #'i' is the datatype of the datas present in the array
+ax4
+
+import array as ar                                              #method 2, 'ar' is the alias
+ax5 = ar.array("i", [1,2,3,4,5,6])
+ax5
+
+from array import *                                             #method 3, '*' means all
+ax6 = array("i", [1,2,3,4,5,6])
+ax6
+ax6[2]                                                          #returns '3'
+
+#ARRAY OPERATIONS (length, adding elements, removing elements & slicing)
+len(ax5)                                                        #returns 6, number of elements present in array
+ax5.append(7)                                                   #adds 7 at the end of the array, returns 'array('i', [1, 2, 3, 4, 5, 6, 7])'
+ax5.extend( [8,9,10] )                                          #adds '6,7,8' at the last of the array, returns 'array('i', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])'
+ax5.insert (2, 11)                                              #insert 11 at the '2nd index' or the '3rd value', returns 'array('i', [1, 2, 11, 3, 4, 5, 6, 7, 8, 9, 10])'
+ax5.pop()                                                       #removes the last element from the array
+ax5.pop(2)                                                      #removes the elemt in the '2nd index' i.e. the '3rd value', returns 'array('i', [1, 2, 3, 4, 5, 6, 7, 8, 9])', removes 11
+print(ax5[0:3])                                                 #only prints the 1st, 2nd & 3rd value (doesn't print the 'index 3' value), returns 'array('i', [1, 2, 3])'
+
+#ARRAY CONCATENATION (create 2 arrays & an empty array to concatenate them)
+import array as ara
+ax7 = ara.array ("d", [1,2,3,4])                                #1st array created, 'd' for float value
+ax8 = ara.array ("d", [5,6,7,8])                                #2nd array created, 'd' for float value
+ax9 = ara.array ("d")                                           #empty array created to concatenate the above 2 arrays
+ax9 = ax7 + ax8
+print(ax9)
+
+
