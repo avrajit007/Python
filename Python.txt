@@ -137,4 +137,64 @@ ax9 = ara.array ("d")                                           #empty array cre
 ax9 = ax7 + ax8
 print(ax9)
 
+#LOOPING OF ARRAYS (for, while)
+#for loop (when number of iterations are known)
+for i1 in ax5:
+    print(i1)                                                   #both commands must be typed and run in the same cell, else error
+
+for i2 in ax5[0:3]:
+    print(i2)                                                   #only after placing the ':', press enter, else will not run
+
+#while loop (interation, condition, increment)
+i3=0                                                            #iteration
+while i3 < ax5[3]:                                              #condition to print only 4 values
+    print(ax5[i3])                                              #if only 'i3' is printed then will only print the iterations
+    i3=i3+1                                                     #increment
+
+i4=0
+while i4 < len(ax5):
+    print(ax5[i4])                                              #to print all values = length of the array
+    i4=i4+1
+
+#CREATING DICTIONARIES (using 2 different methods (KEYS & VALUES)
+my_dict = {"avra" : "001", "deepu" : "002"}                     #METHOD 1 - dictionary created, "avra" is the KEY, "001" is the value
+print(my_dict)
+type(my_dict)                                                   #returns 'dict'
+
+my_dict1 = dict(avra ="001", deepu ="002")                      #METHOD 2 - dictionary created
+print(my_dict1)
+type(my_dict1)                                                  #returns 'dict'
+                                                   
+#CREATING NESTED DICTIONARY (dictionary inside a dictionary)
+emp_dict = {"employee": {"avra": {"id":"001", "last_name":"dey", "salary":"2000"}, "deepu": {"id":"002", "last_name":"nayak", "salary":"3000"}}}
+print(emp_dict)
+
+#Operations on HASH-TABLES (KEYS & VALUES)
+print(my_dict.keys())                                           #output "(['avra', 'deepu'])"
+print(my_dict.values())                                         #output "(['001', '002'])"
+print(my_dict.get("deepu"))                                     #output "002"
+
+#Operations on hash-tables using LOOPS
+for i5 in my_dict:
+    print(i5)                                                   #only prinnts the keys by default, output "avra, deepu"
+
+for i6 in my_dict.values():                                     #only print the values, output "001, 002"
+    print(i6)
+
+for i7 in my_dict.items():                                      #prints both
+    print(i7)                                                   #output "('avra', '001'), ('deepu', '002')"
+
+#UPDATING data in a dictionary
+my_dict["avra"] = "003"                                         #replacing 'values' for a 'key'
+my_dict["subha"] = "004"                                        #adding new 'values & keys' in a dictionary
+print(my_dict)                                                  #output "{'avra': '003', 'deepu': '002', 'subha': '004'}"
+my_dict.pop("deepu")                                            #deleting entries, output "{'avra': '003', 'subha': '004'}"
+my_dict.popitem()                                               #remove the last entries (both keys & values)
+del my_dict["subha"]                                            #deletes (both keys & values) for "subha"
+
+#CONVERTING DICTIONARY into DATA FRAME
+import pandas as ad                                             #'pandas' for data frame, 'ad' is an 'alias'
+df = ad.DataFrame(emp_dict["employee"])                         #'ad' is the alias, 'emp_dict' was the NESTED DICTIONARY created earlier
+print(df)                                                       #output like data frame table (like in R studio)
+
 
