@@ -197,4 +197,49 @@ import pandas as ad                                             #'pandas' for da
 df = ad.DataFrame(emp_dict["employee"])                         #'ad' is the alias, 'emp_dict' was the NESTED DICTIONARY created earlier
 print(df)                                                       #output like data frame table (like in R studio)
 
+#Operations in Python (Arithmetic, Assignment, Comparision, Logical, Membership, Identity, Bit-wise) 
+#Arithmetic
+x2 = 10                                                         #'x2' variable is assigned a value of 10
+y2 = 2                                                          #'y2' variable is assigned a value of 2
+x2 + y2                                                         #addition
+x2 - y2                                                         #substraction
+x2 * y2                                                         #multiplication
+x2 / y2                                                         #divison
+x2 ** y2                                                        #to the Power (output- 10^2)
+x2 // y2                                                        #integer divison (remainder discarded)
+x2 % y2                                                         #modulo-division (only remainder is shown)
+
+#Assignment
+x2 = 10                                                         # 'x2' variable is assigned a value of 10
+x3 += 10                                                        # "x3 = x3 + 10"
+x4 -= 10                                                        # "x4 = x3 - 10"
+x5 *= 10                                                        # "x5 = x3 * 10"
+x6 /= 10                                                        # "x6 = x3 / 10"
+x7 **= 10                                                       # "x7 = x3 ^ 10"
+
+#Comparision ( == , != , > , < , >= , <= )
+x8 = 20
+y8 = 10
+compare = x8 == y8                                              #variable 'compare' is assigned if x8 is equal to y8
+print(compare)                                                  #returns 'False'
+
+#Condition (if, else & else-if)
+if x8 == y8:
+    Print("equal")
+elif x8 > y8:                                                   #else-if is written as "elif" in Python; allignment should be same as here, else error
+         print("greater")
+else:                                                           #allignment should be same as here
+            print("smaller")
+
+#Logical (AND, OR, NOT)
+x8 > 20 and y8 > 5                                              #"AND" operator, should be in lower case, returns 'true' only if both statements are TRUE
+x8 > 20 or y8 > 5                                               #returns TRUE, "OR" operator
+not(x8 > 20 and y8 > 5)                                         #returns TRUE
+
+Bit-wise (AND, OR, NOT(~), XOR, Left shift, Right shift)
+10 & 12                                                         #"AND GATE"-returns 8 (1000), since 10 is (1010) and 12 is (1100), so result will be 1 only if both are 1s
+10 | 12                                                         #"OR GATE"-returns 14 (1110), takes 1 if either of the numbers is 1 
+10 ^ 12                                                         #"XOR GATE"- returns 6 (0110), if 'two' digits are similar, it takes '0'
+12 >> 2                                                         #returns 3 (11), shifts the binary digits to right by 2, since 12 (1100), shifting right by 2 makes it (11)
+12 << 2                                                         #returns 48 (110000), shifts the binary digits to left by 2
 
