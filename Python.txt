@@ -251,6 +251,7 @@ while i9 < 10:                                                  #giving conditio
     i9= i9+1                                                    #increment, loop ended, can't use "break", else will end the loop after printing '0'
 print("end of program")                                         #print "end of program" after coming out of the loop
 
+#Guessing game (a random number will be generated till 20, have to guess the number)
 import random as rr
 n1 = 20
 to_be_guessed = int (n1 * rr.random()) + 1
