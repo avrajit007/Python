@@ -243,3 +243,140 @@ Bit-wise (AND, OR, NOT(~), XOR, Left shift, Right shift)
 12 >> 2                                                         #returns 3 (11), shifts the binary digits to right by 2, since 12 (1100), shifting right by 2 makes it (11)
 12 << 2                                                         #returns 48 (110000), shifts the binary digits to left by 2
 
+#LOOPS (FOR, WHILE, NESTED)- in python all pre-test loops
+#WHILE LOOPS
+i9 = 0                                                          #initializing iteration
+while i9 < 10:                                                  #giving condition (print all numbers that is less than 10)
+    print("numbers = ", i9)                                     #'numbers = 0'
+    i9= i9+1                                                    #increment, loop ended, can't use "break", else will end the loop after printing '0'
+print("end of program")                                         #print "end of program" after coming out of the loop
+
+import random as rr
+n1 = 20
+to_be_guessed = int (n1 * rr.random()) + 1
+i10 = 0
+while i10 != to_be_guessed:
+    i10 = int(input ("type a number = "))
+    if i10 > 0:
+        if i10 > to_be_guessed:
+            print("number is too large")
+        elif i10 < to_be_guessed:
+            print("number is too small")
+        else:
+            print("you lose")
+            break
+    else:
+         print("congrats- you won")                            #check notebook for explaination
+
+#FOR LOOPS
+fruits = ["mango", "grapes", "Apple"]
+for i11 in fruits:                                             #no need to increment counter like 'while' loop, else error         
+    print(i11)
+print("end of program")                                        #output - "mango grapes apple end_of_program"
+
+n2 = int(input("factorial of "))                               #input the number whose factorial you want
+fact =1                                                        #assigning value '1' to variable  'fact'
+if n2 < 0: 
+    print("enter a positive number")
+elif n2 == 0:
+    print("factorial is 1")
+else:
+    for r in range(1, n2+1):                                   #range from '1 to n2', do not include 'n2+1'
+        fact = fact * r                                        #multiplying all the numbers that fals in the range with 'fact=1'
+print("factorial is ", fact)                                   #print only after you are out of the loop, else will print all value in the range
+
+#NESTED LOOPS (loop inside another loop)
+#Print the 'set of all the numbers' that satisfies Pythogorian nos. upto a given i/p range (Pythogorian- which follows a^2 + b^2 = c^2
+
+from math import sqrt                                          #"math" module is required to perform 'sqrt' function
+n3 = int(input("enter the range "))                            #range for which sets of Pythogorian numbers are to be obtained
+for a1 in range(1, n3+1):                                      #range of 'a1' is from '1 to n3'
+    for b1 in range(a1, n3):                                   #range of 'b1' has to be from 'a1 to (n3-1)', else for 5 will give both "(4^2 + 3^2)" & "(3^2 + 4^2)"
+        c1_square = a1 ** 2 + b1 ** 2
+        c1 = int(sqrt(c1_square))
+        if c1_square == c1 ** 2:                               #to say that "c_square" is equal to "c^2"
+            print(a1, b1, c1)                                  #don't come out of the loop
+
+#Ticket booking of number of passengers that is manually input, with information (name, age & sex)
+travelling = input("y or n \n")
+while travelling == "y":
+    n4 = int(input("no of people travelling: "))
+    for n4 in range (1, n4+1):
+        name = input("enter name of the passenger: ")
+        age = input("enter age of the passenger: ")
+        sex = input("m or f: ")
+        print(name)
+        print(age)
+        print(sex)
+    travelling = input("forgot someone? \n")                   #this line should be outside the the loop, else will ask after entering the details of 1 passenger
+
+#ATM program on other file (OR check the note-book)
+#For PATTERNS check another file
+
+#File handling
+#READING a TEXT file
+import os
+file = open("C:/Users/Administrator/Downloads/sum.txt", "r")
+print(file.read())
+file.close()
+
+#READ LINES of a text file using 'for' loop
+import os
+file = open("C:/Users/Administrator/Downloads/edit.txt", "r")
+for line in file:
+    print(file.readlines())
+file.close()
+
+#To WRITE in a file ("w" function overwrites, need to use APPEND ("a") for adding lines in the file)
+import os
+file = open("C:/Users/Administrator/Downloads/edit.txt", "w")
+file.write("Hello Kolkata \n")
+file.write("My name is Avrajit")
+file.close()
+
+#CREATING A FILE using python and WRITING on it
+import os
+file = open("C:/Users/Administrator/Downloads/new.txt", "x")
+file.write("Hi I am Avra")
+file.close()
+
+#DELETING/ REMOVING a file permanently using python
+import os
+os.remove("C:/Users/Administrator/Downloads/new.txt")
+file.close()
+
+#DELETING/ REMOVING a FOLDER/ DIRECTORY permanently using python
+import os
+os.rmdir("C:/Users/Administrator/Downloads/New folder")
+file.close()
+
+#Defining FUNCTION (FUNCTION inside a FUNCTION)
+def func(n5):                                                 #name of the function is "n5"
+    def func5():
+        return ("Hi")
+    def func6():
+        return ("I'm Avra")
+    if n5 == 1:
+        return func5
+    else:
+        return func6
+a2 = func(1)
+b2 = func(2)                                                  #can be anything other than "1"
+print(a2(), b2())                                             #output- 'Hi I'm Avra'
+
+#LAMBDA/ ANONYMOUS/ NAMELESS/ THROW-AWAY functions
+mx = lambda a3: (a3 * a3)
+mx(3)                                                         #returns 9, code ended in 2 lines, if a function were to be defined it would have taken 4 lines
+
+#LAMBDA functions within user-defined functions
+def abb(x9):                                                  #an user-defined function is defined by the name of "abb"
+    return (lambda y9: (x9 +y9))
+t = ami(4)
+print(t(-12))
+
+#FILTER FUNCTION (filter out data from iterables (e.g. lists)
+mylist1 = [1, 2, 3, 4, 5, 6, 7]
+new_list = list(filter(lambda a4: (a4/3 == 2), mylist1))
+print(new_list)                                              #output- 6
+
+#MAP FUNCTION
