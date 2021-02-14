@@ -378,6 +378,59 @@ print(t(-12))
 #FILTER FUNCTION (filter out data from iterables (e.g. lists)
 mylist1 = [1, 2, 3, 4, 5, 6, 7]
 new_list = list(filter(lambda a4: (a4/3 == 2), mylist1))
-print(new_list)                                              #output- 6
+print(new_list)                                                                                                          #output- 6
 
-#MAP FUNCTION
+def fi (a12):                                                                                                            #an used-defined function is created in the name of 'fi'
+    if a12 >=3:
+        return a12
+gx5 = tuple(filter(fi, [1,2,3,4,5,6,7]))                                                                                 #'list' is given as an input, but output will be a 'tuple'
+print(gx5)                                                                                                               #output- "(3, 4, 5, 6, 7)"
+
+#MAP FUNCTION (returns a new list)
+mylist1 = [1, 2, 3, 4, 5, 6, 7]                                                                                          #same as the list used in filter
+newlist2 =list(map(lambda a5: (a5/3 != 2), mylist1))
+print(newlist2)                                                                                                          #output- "[True, True, True, True, True, False, True]"
+
+def ma (a10):                                                                                                            #a function is defined as 'mapping'
+    return a10*a10
+gx3 = list(map(ma, [1,2,3,4]))
+print(gx3)                                                                                                               #output- "[1, 4, 9, 16]"
+
+def ma1 (a11, b11):
+    return a11*b11
+gx4 = list(map(ma1, [1,2,3,4], [5,6,7,8]))
+print(gx4)                                                                                                               #output- "[5, 12, 21, 32]"
+
+REDUCE FUNCTION
+from functools import reduce                                                                                             #syntax- "reduce(variables, equation, input)"
+reduce (lambda a6,b6: (a6+b6), [1, 2, 3, 4, 5, 6, 7])                                                                    #output- 28, first add '1 & 2', then adds ists result with next element '3' and so on
+
+from functools import reduce                                                                                             #syntax- "reduce(fn. name, input)"
+def re (a13, b13):
+    return (a13 + b13)                                                                                                   #x+y
+gx6 = reduce(re, [1,2,3,4])                                  
+print(gx6)                                                                                                               #output- 10
+
+#FILTER FUNCTION inside MAP FUNCTION
+gx7 = map(lambda a14: (2*a14), filter(lambda b14: (b14>=3), [1,2,3,4]))                                                  #'3 & 4' are filtered in and map function is used to multiply them with 2 
+print(tuple(gx7))                                                                                                        #output- "(6, 8)"
+
+#MAP FUNCTION inside FILTER FUNCTION
+gx8 = filter(lambda a15: (a15>=7), map(lambda b15: (2*b15), [1,2,3,4,5,6]))
+print(list(gx8))                                                                                                         #output- "[8, 10, 12]"
+
+#MAP & FILTER FUNCTION inside REDUCE FUNCTION
+gx9 = reduce(lambda a16,b16: (a16+b16), map(lambda a16: (a16+a16), filter(lambda b16: (b16>=4), [1,2,3,4,5,6])))         #'4,5 & 6' are filtered in, mapped into '8,10 & 12'
+print(gx9)                                                                                                               #output- 30, '8,10,12' were added to get 30
+
+#ALGEBRAIC equations using LAMBDA function
+gx = lambda a7: (a7 * a7)                                    #solving- x^2
+gx(8)                                                        #output- 64
+
+gx1 = lambda a8,b8: (3*a8) + (4*b8)                          #sloving- (3x+4y) 
+gx1(4,7)                                                     #output- 40
+
+gx2 = lambda a9,b9: (a9 + b9) ** 2                           #solving (a+b)^2
+gx2(3,2)                                                     #output- 25
+
+#GENERATORS
