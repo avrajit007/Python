@@ -442,6 +442,7 @@ b17 = gen(a17)                                               #b is the function(
 print(b17)                                                   #no output, as generator only gives output with 'next' command
 next(b17)                                                    #output- {1: Hi}
 next(b17)                                                    #output- {2: Welcome}, will give an error message if we use another 'next' since only 2 items are present                                                            
+
 def gen1 (a18):                                              #function name 'gen1'
     while a18 <= 4:
         yield a18
