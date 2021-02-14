@@ -433,4 +433,74 @@ gx1(4,7)                                                     #output- 40
 gx2 = lambda a9,b9: (a9 + b9) ** 2                           #solving (a+b)^2
 gx2(3,2)                                                     #output- 25
 
-#GENERATORS
+#GENERATORS                                                  #a function is defined by the name of 'gen'
+def gen (dict1):                                        
+    for q,r in dict1.items():                                #store two items of a dictionary, items- key & value pairs
+        yield q,r
+a17 = {1: "Hi", 2: "Welcome"}                                #'dict 1' is given to be 'a17'
+b17 = gen(a17)                                               #b is the function(a)
+print(b17)                                                   #no output, as generator only gives output with 'next' command
+next(b17)                                                    #output- {1: Hi}
+next(b17)                                                    #output- {2: Welcome}, will give an error message if we use another 'next' since only 2 items are present                                                            
+def gen1 (a18):                                              #function name 'gen1'
+    while a18 <= 4:
+        yield a18
+        a18 = a18 + 1                                        #increment is absolutely necessary in 'while' loops
+b18 = gen1(2)                                                #the value of 'a18' is given as '2'   
+next(b18)                                                    #output- 2
+next(b18)                                                    #output- 3
+next(b18)                                                    #output- 4
+next(b18)                                                    #output- 'error message', as condition given to be '<= 4'
+
+def gen2():                                                  #empty function
+    a19 = 3                                                  #assigned value = 3
+    yield a19
+    a19 = a19 * a19                                          #assigned value = 3*3                     
+    yield a19
+b19 = gen2()
+next(b19)                                                    #output- 3
+next(b19)                                                    #output- 9, again 'next' will give an error
+
+#GENERATORS with LOOPS
+def gen2():                                                 
+    a19 = 3                                                 
+    yield a19
+    a19 = a19 * a19                                            
+    yield a19
+b19 = gen2()                                                #same as the previous program
+for c19 in b19:
+    print(c19)                                              #output 3,9
+
+#GENERATOR EXPRESSIONS
+gx10 = range(6)                                             #another way to define range (0 to 5)
+print("numbers", end=":")                                   #"    numbers:    "
+a20 = [m+2 for m in gx10]                                   #equation, can put in ()brackets as well which will give the 'generator expression'
+print(a20)                                                  #output- "numbers:[2, 3, 4, 5, 6, 7]"
+print("generator expression", end=":")
+b20 = (m+2 for m in gx10)                                   #now equation put in ()bracket (GENERATOR EXPRESSION)
+print(b20)                                                  #output- "generator expression:<generator object <genexpr> at 0x00000240802CA4A0>"
+for n6 in b20:
+    print(n6)                                               #output- "2, 3, 4, 5, 6, 7", but veritically arranged
+
+#using GENERATORS to print FIBONACCI series
+def fib():
+    a21, b21 = 0, 1                                         #two variables are taken (a,b)and assigned avalue of (0,1) respectively
+    while True:
+        yield a21                                           #print '0' first, value of 'a'                                       
+        a21, b21 = b21, a21+b21                             #value of 'b' becomes value of 'a' & value of 'a+b' becomes the value of 'b'
+for gx11 in fib():
+    if gx11 > 50:                                           #stop if sumation becomes more than 50
+        break
+    print(gx11)                                             #output- "0 1 1 2 3 5 8 13 21 34 "
+
+#NUMBER STREAM using generator expression
+a22 = range(10)                                             #range (0 to 9)
+b22 = (m for m in a22)                                      #GENERATOR EXPRESSION, wont give output if 'b22' is printed
+for gx12 in b22:
+    print(gx12, end=" ")                                    #output- "0 1 2 3 4 5 6 7 8 9 ", will print vertically if not ended with 'space'
+
+a23 = range(2, 10, 2)                                       #range (2 to 10) with a difference of '2'
+b23 = (m for m in a23)                                      #GENERATOR EXPRESSION, wont give output if 'b23' is printed
+for gx13 in b23:
+    print(gx13, end=" ")                                    #output- "2 4 6 8 ", even numbers only, will print vertically if not ended with 'space'
+
