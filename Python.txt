@@ -505,3 +505,100 @@ b23 = (m for m in a23)                                      #GENERATOR EXPRESSIO
 for gx13 in b23:
     print(gx13, end=" ")                                    #output- "2 4 6 8 ", even numbers only, will print vertically if not ended with 'space'
 
+#OOPS (object oriented programing system- eg- 'employee' is 'class' & 'Avra & Deepu' are objects)
+class cars():                                               #class is "cars" or 'name of the class' here
+    pass
+honda = cars()                                              #objects are "honda & tata"                                        
+tata = cars()
+honda.model_name = "City"
+honda.manufacture_date = "2017"
+honda.price = 10000
+tata.model_name ="Manza"
+tata.manufacture_date = "2016"
+tata.price = 6000
+print(honda.price)                                          #output- 10000
+print(honda.__dict__)                                       #output- "{'model_name': 'City', 'manufacture_date': '2017', 'price': 10000}"
+
+#SHORTCUT of the previous program using FUNCTION
+class cars():
+    def __init__(self, model_name, manufacture_date, price):     #after 'def', 'space' is there
+        self.model_name = model_name
+        self.manufacture_date = manufacture_date
+        self.price = price
+honda = cars("City", "2017", 10000)
+tata = cars("manza", "2016", 6000)
+print(honda.price)
+print(honda.__dict__)                                            #same output as the previous program
+
+#MODULES in python (Python MODULES)
+def add (u,v):
+    return (u+v)
+def sub (u,v):
+    return (u-v)
+def mul (u,v):
+    return (u*v)
+def div (u,v):
+    return (u/v)                                                 #create a new file and save the file in the name of "calculator.py" after writing this program
+import calculator as calc                                        #open a new python file and write this program to run it
+addition = calc.add(10,15)                                       #new variable in the name of "addition" is taken
+print(addition)                                                  #output- 25
+
+#Built-in MODULES (MODULES which pre-exist in Python)- written in C, iterpreted by Python interpreter
+import sys
+zz= sys.builtin_module_names
+print(zz)                                                        #to get a list of all built-in modules in python
+help("modules")                                                  
+
+from matplotlib import pyplot
+print(dir(pyplot))                                               #to see what are the contents available in the 'module, pyplot'
+
+import math
+print(math.  )                                                   #use in "spyder" IDE to check what functions are available in math function
+
+import calculator
+print(dir(calculator))                                           #to see what are the contents available in the 'module, calculator', that was just created earlier
+
+#Python plots
+from matplotlib import pyplot as plt                             #BAR PLOT
+plt.bar([0.25,1.25,2.25,3.25,4.25],                              #"x-axis" values
+        [50,40,70,80,20],                                        #"y-axis" values
+        label = "BMW",                                           #name of the plot (BMW)
+        color = "r",                                             #"color" NOT "colors"
+        width = 0.5)                                             #thickness of the bars
+plt.legend()                                                     #to write the name of the "name of the plot" inside the barplot
+plt.xlabel("Days")                                               #name of x-axis
+plt.ylabel("Distance")                                           #name of y-axis
+plt.title("Car Data")                                            
+plt.show()                                                       #print the barplot
+
+from matplotlib import pyplot as plt                             #PIE PLOT
+population = [2000, 1600, 900, 725]                              #variable- "population"
+religion = ["Hindus", "Muslims", "Christans", "Others"]          #variable- "religion"
+col = ["b", "g", "r", "c"]                                       #variable- "col"
+plt.pie(population,                                              #pie-plot of the variable "population"
+       labels = religion,                                        #for religion no (" ") required since its a variable
+       colors = col,                                             #to give different "colors" to the pie-plot, here "colors not color"
+       startangle = 90,                                          #pie-plot will start from "NORTH" direction or "90 degree"
+       explode =(0, 0.1, 0, 0),                                  #gap between the borders, since 4 "religions" are present so 4 values
+       autopct = "%1.1f%%")                                      #to give "percentages" of the values       
+plt.title("Pie plot of population density")
+plt.show()                                                       #print the pie-plot
+
+#TIME module
+import time as ti                                                #importing the "time" module
+ti.time()                                                        #output- "1613845802.3676722", numbers of seconds passed from '1st jan 1970'
+ti.ctime(1613845802.3676722)                                     #output- "Sun Feb 21 00:00:02 2021", current date & time
+ti.strftime("%d/ %m/ %y")                                        #output- "21/ 02/ 21"
+
+#DATE-TIME module
+import datetime as dt                                            #importing "datetime" module
+uy = (dt.datetime(2021, 9, 23, 4, 30))                           #year,month,day,hours,minuites
+print(uy)                                                        #output- "2021-09-23 04:30:00"
+
+dt.datetime.today()                                              #output- "2021, 2, 21, 0, 19, 50, 302378"; 21st feb 2021, 12 hours 19 mins 50 seconnds & milliseconds
+
+uy1 = dt.timedelta (days = 20)                                   #"time-delta" function is used to get the differcence between date & times
+uy2 = dt.timedelta (days = 30)
+uy3 = (uy2 - uy1)
+print(uy3)                                                       #output- "10 days, 0:00:00"
+
