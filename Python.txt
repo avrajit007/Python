@@ -602,3 +602,91 @@ uy2 = dt.timedelta (days = 30)
 uy3 = (uy2 - uy1)
 print(uy3)                                                       #output- "10 days, 0:00:00"
 
+#NUMPY module
+import numpy as np                                               #importing the "NUMPY" module
+a24 = np.array( [(1,2,3), (4,5,6)] )                             #creating a 2-dimensional array
+print(a24)                                                       #output- (2,3) array/matrix
+print(a24.ndim)                                                  #output- 2, as 2-dimensional array
+print(a24.dtype)                                                 #returns- "int32", datatype of the array
+print(a24.size)                                                  #returns- 6, number of elements present
+print(a24.shape)                                                 #returns- (2, 3), dimension of the array
+print(a24.max())                                                 #returns- 6, maximum value
+print(a24.sum())                                                 #returns- 21, sum of all the values
+print(np.sqrt(a24))                                              #prints square-root of all the elements in the array
+print(np.std(a24))                                               #returns- "1.70782", standard-deviation of the elemts in the array
+
+#SUM of ROWS & COLUMNS (Rows are called AXIS 1, Columns are called AXIS 0)
+print(a24.sum(axis = 1))                                         #returns (6 15), sum of rows (1+2+3) & (4+5+6)
+print(a24.sum(axis = 0))                                         #returns (5 7 9), sum of columns (1+4) & (2+5) & (3+6)
+  
+#RESHAPE & SLICING using NUMPY
+import numpy as np
+a25 = np.array( [ (1,2,3,4), (5,6,7,8) ] )                       #(2,4) array
+b25 = a25.reshape(4,2)                                           #like transverse of matrix
+print(b25)                                                       #(4,2) array
+
+print(a25[0,2])                                                  #slicing- getiing '3' using index, in python indexing starts from '0'
+print(a25[0: ,2])                                                #slicing- getting '3 & 7' both
+
+#Operations on ARRAYS
+import numpy as np
+a26 = np.array([(1,2), (5,12)])
+b26 = np.array([(20,15), (10,3)])
+print(a26 + b26)                                                 #sum of arrays
+print(a26 * b26)                                                 #NOT LIKE MATRIX MULTIPLICATION, multiplies each element with other
+
+print(np.vstack((a26,b26)))                                      #combine both the arrays into (4x2) order
+print(np.hstack((a26,b26)))                                      #combine both the arrays into (2x4) order
+
+#SPECIAL operations on ARRAYS
+import numpy as np
+a27 = np.array([1,2,3])
+print(np.exp(a27))                                               #returns exponential of (1,2,3), output- "[ 2.71828 7.3890 20.08553]"
+print(np.log(a27))                                               #returns 'log base e' of (1,2,3), output- "[0     0.69314   1.09861]"
+print(np.log10(a27))                                             #returns 'log base 10' of (1,2,3), output- "[0     0.30103    0.47712]"
+
+import numpy as np
+import matplotlib.pyplot as plt
+a28 = np.arange(0, 3* np.pi, 0.1)                                #variable defined as 'x = 0 to 3pi' with interval of '0.1'
+b28 = np.sin(a28)                                                #sin(x)
+plt.plot(a28, b28)                                               #sin(x) vs x
+plt.show()
+
+c28 = np.tan(a28)                                                #tan(x)
+plt.plot(a28, c28)                                               #tan(x) vs x
+plt.show()
+
+#SCI-PY module
+from scipy import cluster
+help(cluster)                                                    #to get information on the cluster module
+
+#SPECIAL module in scipy
+from scipy import special 
+a29 = special.exp10(2)                                           #exponent function(to the power of)
+print(a29)                                                       #returns 100, (10^2)
+b29 = special.exp2(3)
+print(b29)                                                       #returns 8, (2^3)
+
+c29 = special.sindg(30)                                          #'sine degree' function
+print(c29)                                                       #returns '0.49999999999999994', as 'sin(30)' is '1/2' or '0.5'
+
+#INTEGRATE module in scipy
+from scipy import integrate
+a30 = scipy.integrate.quad(lambda x: special.exp10(x), 0 ,1)     #integration of (10^x) from limit (0 to 1)
+print(a30)                                                       #returns- "(3.9086503371292665, 4.3394735994897923e-14)"
+
+#DISCRETE FOURIER TRANSFORM (fftpack)
+from scipy.fftpack import fft, ifft                              #Fourier transform & inverse-fourier transform
+import numpy as np                                               #to create an array of discrete numbers
+a31 = np.array([1,2,3,4])
+b31 = fft(a31)
+print(b31)                                                       #returns- "[10 -2+2j -2 -2-2j]"
+print(ifft(b31))                                                 #returns- "[1+0j 2+0j 3-0j 4+0j]"
+
+#LINEAR ALGEBRAS (MATRIX)
+from scipy import linalg                                         #import "linalg" sub-module for using LINEAR ALGEBRA
+import numpy as np
+a32 = np.array([(1,2), (3,4)])                                   #array but considered as matrix
+b32 = linalg.inv(a32)                                            #inverse of the 'matrix (a)'
+print(b32)                                                       #returns inverse of the matrix
+
