@@ -690,3 +690,66 @@ a32 = np.array([(1,2), (3,4)])                                   #array but cons
 b32 = linalg.inv(a32)                                            #inverse of the 'matrix (a)'
 print(b32)                                                       #returns inverse of the matrix
 
+#PANDAS (Data manipulation & analysis)
+import pandas as pd                                              #importing panda module
+cars1 = {"Name": ["Mercedez","Tata","Kia","Ferarri","Toyota"],   
+         "Milage": [10,20,13,9,16], 
+         "CC": [2000,1200,1500,2500,1700]}                       #creating a dictionary named "cars1"
+df = pd.DataFrame(cars1)                                         #creating a DATA FRAME
+print(df)
+
+#SLICING of DATA FRAMES using Pandas
+print(df.head(2))                                                #shows only first 2 rows of the previously created data frame
+print(df.tail(2))                                                #shows only last 2 rows of the previously created data frame
+
+#MERGING of Data Frames using Pandas (DIFFERENT INDEX value)
+import pandas as pd                                              #'PANDAS' module is imported as 'pd'
+df1 = pd.DataFrame( {"HPI":[80,90,70,60],
+                     "int_rate":[2,1,2,3],
+                     "GDP":[50,45,45,67] },
+                     index = [2001,2002,2003,2004] )             #data frame is created and named as 'df1'
+print(df1)                                                       #the dictionary is printed as data frame, but instead of index(0,1,...), index is (2001,2002...)
+df2 =pd.DataFrame( {"HPI":[80,90,70,60],              
+                    "int_rate":[2,1,2,3],
+                    "GDP":[50,45,45,67] },
+                     index = [2005,2006,2007,2008] )             #another data frame is created and named as 'df2'
+merge1 = pd.merge(df1, df2)                                       
+print(merge1)                                                    #data frame is printed but the index column is not present, as whatever row is common between 2 data frames will be printed
+merge2 = pd.merge(df1, df2, on= "HPI")
+print(merge2)                                                    #columns printed are "((HPI, int_rate_x, GDP_x, int_rate_y, GDP_y))"
+
+#JOINING of Data Frames (if they have SAME INDEX value)
+import pandas as pd
+df3 = pd.DataFrame( {"HPI_x":[80,90,70,60],                      
+                     "int_rate_x":[2,1,2,3],
+                     "GDP_x":[50,45,45,67] },
+                     index = [2001,2002,2003,2004] )             
+df4 =pd.DataFrame( {"HPI_y":[80,90,70,60],
+                    "int_rate_y":[2,1,2,3],
+                    "GDP_y":[50,45,45,67] },
+                     index = [2001,2003,2004,2005] )
+joined = df3.join(df4)
+print(joined)                                                    #both the data frames are joined based on their index value
+
+#CHANGING INDEX OF DATA FRAME
+import pandas as pd
+cars1 = {"Name": ["Mercedez","Tata","Kia","Ferarri","Toyota"],   
+         "Milage": [10,20,13,9,16], 
+         "CC": [2000,1200,1500,2500,1700]}
+df = pd.DataFrame(cars1)                                         #data frame "df" which was previously used was copied
+df.set_index("Name", inplace = True)                             #INDEX is set as ("mercedez, tata...") instead of ("0, 1...")
+print(df)
+
+#Changing the HEADER of a COLUMN in a Data frame
+df = df.rename( columns = {"CC" : "Capacity"})
+print(df)                                                        #column name will be changed from "CC to Capcity"
+
+#CONCATENATION of Data frames
+con = pd.concat([df1, df2])                                      #prints all values of (HPI, int_rate, GDP) for all the index values from (2001 to 2008)
+print(con) 
+
+#DATA MUNGING (coversion of a file from an existing format to another format)
+import pandas as pd
+chan = pd.read_excel("C:/Users/Administrator/Downloads/Amco-china.xlsx", index_col=0)          #path name where the excel file exist, "index_col=0" means no change in data frame
+chan.to_html("chang.html") 
+
