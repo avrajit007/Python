@@ -808,7 +808,7 @@ plt.show()                                                       #print output
 
 #Histograms (command- hist)
 from matplotlib import pyplot as plt
-a35 = [35,55,62,45,21,34]                                        #X-axis
+a35 = [35,46,49,45,21,34]                                        #X-axis (0-10 & 10-20 there are no values, so no graph in that region)
 b35 = [0,10,20,30,40,50]                                         #Y-axis is always ("continuous and at a fixed interval") IN HISTOGRAM
 plt.hist(a35, b35, histtype="bar", rwidth=0.5, label="Test")     #plotting histgram ("pyplot.hist")
 plt.title("Test histogram")
@@ -816,7 +816,7 @@ plt.xlabel("X axis")
 plt.ylabel("Y axis")
 plt.legend()
 plt.grid(True, color="k")
-plt.show()
+plt.show()                                                       #0-10(no value), 10-20(no value), 20-30( only 21), 30-40(34 & 35), 40-50(45, 46 & 49)
 
 #Scatter plots (to see how 2 variables relate to each other)(command- scatter)
 from matplotlib import pyplot as plt
