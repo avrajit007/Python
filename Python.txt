@@ -753,3 +753,80 @@ import pandas as pd
 chan = pd.read_excel("C:/Users/Administrator/Downloads/Amco-china.xlsx", index_col=0)          #path name where the excel file exist, "index_col=0" means no change in data frame
 chan.to_html("chang.html") 
 
+#STATISTICS module
+from statistics import mean                                      #to get mean of an observation
+print(mean([1,2,1,3,4,8]))                                       #output- "3.16"
+
+from statistics import median                                    #to get median of an observation
+print(median([1,2,1,3,4,8]))                                     #output- "2.5"
+
+from statistics import mode                                      #to get mode of an observation
+print(mode([1,2,1,3,4,8]))                                       #output- "1"
+
+from statistics import variance                                  #to get variance of an observation
+print(variance([1,2,1,3,4,8]))                                   #output- "6.96"
+
+#MATPLOTLIB
+#Line graph (command- plot)
+from matplotlib import pyplot as plt                             #import "pyplot"
+plt.plot( [1,2,3], [4,5,1] )                                     #X-axis in the 1st list & Y-axis in the 2nd list
+plt.show()                                                       #to print the output
+
+from matplotlib import pyplot as plt
+a33 = [5,8,10]                                                   #X-axis
+b33 = [12,18,6]                                                  #Y-axis
+plt.plot(a33, b33)                                               #plot 'X  vs Y'
+plt.title("Test Plot")                                           #adding a title to the plot
+plt.xlabel("X axis")                                             #adding 'X-axis' name
+plt.ylabel("Y axis")                                             #adding 'Y-axis' name
+plt.show()                                                       #to print the output
+
+from matplotlib import pyplot as plt
+a33 = [5,8,10]                                                   #x1
+b33 = [12,18,6]                                                  #y1
+a34 = [6,9,11]                                                   #x2
+b34 = [6,15,7]                                                   #y2
+plt.plot(a33, b33, "b", label="line 1", linewidth=5)             #plotting line 1 & naming it "line1", can see in graph by legend command
+plt.plot(a34, b34, "r", label="line 2", linewidth=5)             #plotting "line 2"
+plt.title("Test Lines")                                          #title of the graph
+plt.xlabel("X-axis")                                               
+plt.ylabel("Y-axis")
+plt.legend()                                                     #to give info at the top right corner of the graph
+plt.grid(True, color="k")                                        #to insert square "grid lines" in the graph, "black" color
+plt.show()                                                       #print the graph
+
+#Bar graphs (command- bar)
+from matplotlib import pyplot as plt
+plt.bar([1,3,5,7,9], [5,2,7,8,2], label="graph 1", color="b")    #X-axis & Y-axis values for "BAR graph 1"
+plt.bar([2,4,6,8,10], [8,6,2,5,6], label="graph 2", color="r")   #X-axis & Y-axis values for "BAR graph 2"
+plt.legend()                                                     #to give info at the top right corner of the graph          
+plt.grid(True, color="k")                                        #grid lines with "black" color
+plt.title("Test Bar graph")                                      #title of the graph
+plt.xlabel("Number")
+plt.ylabel("Height")
+plt.show()                                                       #print output
+
+#Histograms (command- hist)
+from matplotlib import pyplot as plt
+a35 = [35,55,62,45,21,34]                                        #X-axis
+b35 = [0,10,20,30,40,50]                                         #Y-axis is always ("continuous and at a fixed interval") IN HISTOGRAM
+plt.hist(a35, b35, histtype="bar", rwidth=0.5, label="Test")     #plotting histgram ("pyplot.hist")
+plt.title("Test histogram")
+plt.xlabel("X axis")
+plt.ylabel("Y axis")
+plt.legend()
+plt.grid(True, color="k")
+plt.show()
+
+#Scatter plots (to see how 2 variables relate to each other)(command- scatter)
+from matplotlib import pyplot as plt
+a36 = [1,2,3,4,5,6,7,8]                                          #X-axis
+b36 = [5,2,4,2,1,4,5,2]                                          #Y-axis
+plt.scatter(a36, b36, label="Scatter", color="b")
+plt.title("Test scatter plot")
+plt.xlabel("X axis")
+plt.ylabel("Y axis")
+plt.legend()
+plt.grid(True, color="k")
+plt.show()                                                       #print the scatter plot
+
