@@ -830,3 +830,49 @@ plt.legend()
 plt.grid(True, color="k")
 plt.show()                                                       #print the scatter plot
 
+#Stack plots/ Area plots (command- stackplot)
+from matplotlib import pyplot as plt
+days = [1,2,3,4,5]                                               #this X-AXIS data is mandatory else "stack plot" will not be proper
+sleeping = [7,8,6,11,7]                                          #4 variables were taken "sleeping, eating, working, playing" which will be represented in y-axis
+eating = [2,3,4,3,2]
+working = [7,8,7,2,2]
+playing = [8,5,7,8,13]
+plt.plot([], [], color="b", label="SLEEPING", linewidth=5)       #4 empty "line plots" were plotted just to give labels which will show in the legend
+plt.plot([], [], color="g", label="EATING", linewidth=5)
+plt.plot([], [], color="r", label="WORKING", linewidth=5)
+plt.plot([], [], color="m", label="PLAYING", linewidth=5)
+plt.stackplot(days, sleeping, eating, working, playing, colors=["b","g","r","m"])
+plt.title("Area/stack plot")
+plt.xlabel("X-axis")
+plt.ylabel("Y-axis")
+plt.legend()
+plt.show()                     
+
+#Pie plots (command- pie)
+from matplotlib import pyplot as plt
+population = [2000, 2300, 2800, 3700]                             #variable to be plotted
+year = [2018, 2019, 2020, 2021]                                   #label for each value for variable
+cols = ["b", "g", "r", "c"]                                       #colors for each variable
+plt.pie(population, 
+        labels = year,                                            #variable "year" as label of the plot 
+        colors = cols,                                            #variable "col" for colors
+        startangle = 90, 
+        explode = (0, 0.1, 0, 0),                                 #2nd slice of the pie plot will come out
+        autopct= "%1.1f%%")                                       #will show percentage values on the pie plot
+plt.title("Pie plot")
+plt.legend()                                                      
+plt.show()                                                        #print the plot
+
+#Multiple plots at the same time
+import matplotlib.pyplot as plt
+import numpy as np                                                #for using array, exp, cos & pi function
+def f(t):                                                         #function "f of t" is defined
+    return (np.exp(-t ) * np.cos(2 * np.pi *t))
+t1 = np.arange(0, 5, 0.1)                                         #array was defined, starting value is 0, end value is 5 with interval of 0.1
+t2 = np.arange(0, 5, 0.02)                                        #array was defined, starting value is 0, end value is 5 with interval of 0.02
+plt.subplot(211)                                                  #horizontally 1 plot, vertically 2 plots
+plt.plot(t1, f(t1), t2, f(t2))
+plt.subplot(212)                                                  #for (221 & 222- horizontally 2 plots, vertically 1 plot)
+plt.plot(t2, np.cos(2 * np.pi *t2))
+plt.show()  
+
