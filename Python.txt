@@ -874,5 +874,133 @@ plt.subplot(211)                                                  #horizontally 
 plt.plot(t1, f(t1), t2, f(t2))
 plt.subplot(212)                                                  #for (221 & 222- horizontally 2 plots, vertically 1 plot)
 plt.plot(t2, np.cos(2 * np.pi *t2))
-plt.show()  
+plt.show()                                                        #prints the plot
+
+#SEABORN 
+#Rel-plot (for understanding relationship between variables of a dataset)
+import seaborn as sns
+a37 = sns.load_dataset("flights")                                                 #'flights' dataset is loaded from github profile of Michael Wascom (contains "year, month, passengers" as column names
+sns.relplot( x = "passengers", y = "month", hue = "year", data = a37)
+
+import seaborn as sns
+a37 = sns.load_dataset("flights")
+sns.relplot( x = "passengers", y = "month", data = a37, kind = "line")            #"line plot"
+
+#Cat-plot (for understanding categorical data)
+import seaborn as sns
+a38 = sns.load_dataset("tips")                                                    #contains "total bill(float), tip(float), sex(M or F), smoke(yes or no), day(sun or mon), time(lunch or dinner), size(int)" as column names
+sns.catplot(x = "day", y = "total_bill", data = a38, kind = "strip")              #Default = "strip", other kind- "box, violin"
+
+#Dist-plot (for plotting UNI-VARIATE data) & joint-plot for bi-variate
+import seaborn as sns
+import numpy as np
+a39 = np.random.normal(loc = 5, size = 100, scale = 2)                            #"random normal distribution" generated 
+sns.distplot(a39)
+
+#Multiple plots 
+#Facet-Grid-plot
+import seaborn as sns
+import matplotlib.pyplot as plt
+a40 = sns.load_dataset("iris")                                                    #"iris" flower dataset
+b40 = sns.FacetGrid(a40, col="species")                                           #plot based on column name "species"
+b40.map(plt.hist, "sepal_length", color = "g")                                    #color of the histogram will be green
+
+#Pair-Grid-plot
+import seaborn as sns
+import matplotlib.pyplot as plt
+a37 = sns.load_dataset("flights")
+b37 = sns.PairGrid(a37)                                                           #different plots for all the different columns
+b37.map(plt.scatter)                                                              #scatter plot, "plt.plot"- for line plot
+
+#CASE STUDY- Fifa 2018 world cup strongest 11 (4 Def, 3 Mid, 3 Atk)
+import seaborn as sns
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+df5 = pd.read_csv("C:/Users/Administrator/Desktop/FIFA dataset/FullData.csv")
+del df5["National_Kit"]                                                           #to delete the column named "National_Kit" from the dataset
+df5.head(3)                                                                       #to read first 3 rows of the saved dataset (total- 53 columns)
+
+plt.figure( figsize = (15,32))                                                    #"countplot" is for counting the number of players playing for different countries
+sns.countplot(y = df5.Nationality, palette = "Set2")                              #"Nationality" will be in "Y-axis", "pelette" will give different colors to the 'bars' 
+
+plt.figure( figsize = (15,6))
+sns.countplot(x = "Age", data =df5)                                               #to count number of players participating based on their "Age"
+
+#OPEN-CV (cv2 module- for understanding computer vision- converts image into numpy arrays in order of "MxNx3")
+#install the module at jupyter notebook first- "pip install opencv-python"
+import cv2
+img = cv2.imread("C:/Users/Administrator/Downloads/Cristiano Ronaldo.png", 1)     #"1" for colored image, "0" for Black&White image, ".jpg" is mandatory else error
+print(img)                                                                        #returns- a n-dimentional array
+print(type(img))                                                                  #returns- "numpy.ndarray"
+print(img.shape)                                                                  #returns size of the image- "600,800,3"
+
+import cv2
+img = cv2.imread("C:/Users/Administrator/Downloads/Cristiano Ronaldo.png", 1)
+cv2.imshow("cr7", img)                                                            #cannot execute the program now, else image will show and vanish fast that our eyes can't see
+cv2.waitKey(0)                                                      #instead of "0", any number can be used (eg- if '2000' then it will wait for 2000 msec then it will vanish)
+cv2.destroyAllWindows()                                                           #to make the image vanish, if this command is not given then image cannot be closed
+
+#Resize-ing image
+import cv2
+img = cv2.imread("C:/Users/Administrator/Downloads/Cristiano Ronaldo.png", 1)
+res = cv2.resize(img, (200, 200))                                                 #to change the size of the image
+cv2.imshow("cr7", res)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+import cv2
+img = cv2.imread("C:/Users/Administrator/Downloads/Cristiano Ronaldo.png", 1)
+res1 = cv2.resize(img, (int(img.shape[1]/2), int(img.shape[0]/2)))                #resized the image shape to half its original size, "axis 1- row & axis 0- column"
+cv2.imshow("cr7", res1)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+#Face detection of image
+import cv2
+face_recog = cv2.CascadeClassifier("C:/Users/Administrator/Downloads/Python/haarcascade_frontalface_default.xml")    #need to download the cascade classifier from github url
+img = cv2.imread("C:/Users/Administrator/Downloads/Cristiano Ronaldo.png", 1)  #scaleFactor' decreases the shape value bu 5% foe greater accuracy, decreases till face is found
+gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)                               #coverting the color of the image file from "BRG" to "Gray-scale(Black&White)" 
+faces = face_recog.detectMultiScale(gray_img, scaleFactor = 1.05, minNeighbors = 5)   #coordinates of the image is searched using "detectMultiScale" to find out the face 
+for r, c, w, h in faces:                                                              #'for loop' to create a rectrangular box to identify the face 
+    img = cv2.rectangle(img, (r,c), (r+w, c+h), (0,255,0), 3)        #r-xaxis, c-yaxis, w-width, h-height; (0,255,0)- color of the rectrangle; 3- width of the rectrangle box
+cv2.imshow("Gray", img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+#Face detection from video
+import cv2, time                                                                  #import both "cv2" & "time" module
+video = cv2.VideoCapture(0)                                                       #"0" is for the built-in camera
+check, frame = video.read()   #'check' returns True if python is able to read 'VideoCapure'; 'frame' is a numpy array which represents 1st image frame of the 'VideoCapture' 
+print(check)
+print(frame)
+time.sleep(5)                                                                     #freeze the program for 5 seconds, so camera will be on for 5 seconds
+video.release()                                                                   #prints the output
+
+import cv2, time
+video = cv2.VideoCapture(0)
+check, frame = video.read()
+time.sleep(3)
+cv2.imshow("vid_show", frame)          #"imshow" function shows the image frames of the video untill the window closes, window closes based on time given in 'waitKey' function
+cv2.waitKey(0)
+video.release()
+cv2.destroyAllWindows()
+
+import cv2, time
+video = cv2.VideoCapture(0)
+a41 = 1
+while True:                                                                       #'True' - if python can read the "VideoCapture" object, it will enter the loop
+    a41 = a41 + 1 
+    check, frame = video.read()
+    print(frame)
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    cv2.imshow("new_show", gray)
+    key = cv2.waitKey(1)                                                          #will generate anew frame after every 1 msec
+    if key == ord("q"):                                                           #if key "q" is pressed, it will break out of the loop
+        break
+print(a41)                                                                        #print the "number of frames"
+video.release()
+cv2.destroyAllWindows()
+
+
 
