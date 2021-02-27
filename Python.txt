@@ -963,7 +963,7 @@ img = cv2.imread("C:/Users/Administrator/Downloads/Cristiano Ronaldo.png", 1)  #
 gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)                               #coverting the color of the image file from "BRG" to "Gray-scale(Black&White)" 
 faces = face_recog.detectMultiScale(gray_img, scaleFactor = 1.05, minNeighbors = 5)   #coordinates of the image is searched using "detectMultiScale" to find out the face 
 for r, c, w, h in faces:                                                              #'for loop' to create a rectrangular box to identify the face 
-    img = cv2.rectangle(img, (r,c), (r+w, c+h), (0,255,0), 3)        #r-xaxis, c-yaxis, w-width, h-height; (0,255,0)- color of the rectrangle; 3- width of the rectrangle box
+    img = cv2.rectangle(img, (r,c), (r+w, c+h), (0,255,0), 3)           #r-xaxis, c-yaxis, w-width, h-height; (0,255,0)- color of the rectrangle; 3- width of the rectrangle box
 cv2.imshow("Gray", img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
@@ -1002,5 +1002,73 @@ print(a41)                                                                      
 video.release()
 cv2.destroyAllWindows()
 
-
+#WEB-DEVELOPMENT (DJANGO)-use in pycharm
+pip install django                                                  #type in pyCharm terminal to install "DJANGO", SQL parse database & PYTZ module (for time zone calculations)
+django-admin start project DEMO_PROJECT                             #type in pyCharm terminal, "DEMO_PROJECT" is the name of the project
+cd DEMO_PROJECT
+python manage.py                                                    #to open the webpage created by "Django", click the link that appers at the pyCharm terminal
+#after minimizing the web browser, to return the control to the pyCharm terminal: press "cntrl + c"
+python manage.py startapp DEMOAPP                                   #to create an app in "DEMO_PROJECT"
+#go to left hand side of the pyCharm and click on "DEMOAPP" & double-click on "views.py" & type the below code
+from django.http import HttpResponse
+def hi(request):
+    return HttpResponse('<h1>This is Avrajit</h1>')                 #the phrase that will be displayed on the created webpage
+#now, right-click on the "DEMOAPP", create a new python file & rename it to "urls.py"
+from django.urls import path
+from . import views                                                 #"." means current directory
+urlpatterns = [
+    path('', views.hi, name = 'Avra-Home'),
+]
+#open "urls.py" present in the "DEMO_PROJECT" & start editing
+from django.contrib import admin
+from django.urls import path, include                               #also import "include" module along with "path" module
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('DEMOAPP.urls'))
+]
+#again go to pyCharm terminal and type
+python manage.py runserver
+#click the link at the pyCharm terminal, it will open the webpage which will show "This is Avrajit"
+#Again press "cntrl + c" to give control to pyCharm terminal
+#right-click on the "DEMOAPP", click on "new directory", name the directory as "templates"
+#right-click on the "templates directory" that was just created & create another "new directory" inside it & rename it as sme name as the name of the app i.e. "DEMOAPP"
+#right-click on the "DEMOAPP directory" that was just created & create a "new HTML file" and name as "hi.html" or any other name
+#start editing the html file
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Avrajit</title>
+    <style>
+        table, th, td {border:1px solid black;}        #for giving aborder to the table created below
+    </style>
+</head>
+<body>
+<h1>Welcome to my world</h1>                           #main heading 
+<h2>This is my website</h2>                            #sub heading
+<ul>                                                   #to insert an un-ordered list
+    <li>Python</li>
+    <li>R</li>
+</ul>
+<table style="width:30%">                              #to insert a table with some formatting using "style", the parenthesis should close after "style" else "style" won't work
+    <tr>                                               #table row
+        <th>Python</th>                                #table heading
+        <th>R</th>
+    </tr>
+    <tr>
+        <td>Spyder</td>                                #table column
+        <td>Studio</td>
+    </tr>
+</table>
+</body>
+</html>
+#open "apps.py" from "DEMOAPP", copy the name of the class "DemoappConfig"
+#then go to "settings.py" inside the "DEMO_PROJECT", scroll down and look for installed apps and edit as below
+INSTALLED_APPS = [
+'DEMOAPP.apps.DemoappConfig',                                                          #copy the name of the class, don't forget to end with a (","), else error
+#go back to "view.py" inside "DEMOAPP" and start editing the function
+def hi(request):
+    return render(request,'DEMOAPP/hi.html')                                           #the name of the app that was created i.e. "DEMOAPP" & HTML file that was saved "hi.html"
+#go back to pyCharm terminal to type "python manage.py runserver" & click on the link on the terminal to view the edited website that was designed
+           
 
