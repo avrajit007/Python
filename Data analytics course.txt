@@ -1,0 +1,49 @@
+#Creating a list and printing its items
+x = [1, 2, "a", "b"]
+
+for i in x:
+    print(i)
+
+#OR
+i = 0
+while i = len(x):
+      print(x[i])
+      i = i+1
+
+#Slicing operation
+x = "This is a string"
+print (x[0:3])                                   #returns 'Thi'
+
+x = 'Dr. Christopher Brooks'
+print(x[4:15])                                   #returns 'Christopher', remember 'space' also has an index value
+
+#Other operations with string
+first_name = "Christopher"
+last_name = "Brooks"
+print(first_name + " " + last_name)              #Concatenation(+), returns 'Christopher Brooks'
+print(first_name * 2)                            #repeatation(*), returns 'ChristopherChristopher'
+print("Chris" in first_name)                     #search(in), returns 'True'
+
+first_name = "Christopher Arthur Brooks".split(" ")[0]         #split based on space
+last_name = "Christopher Arthur Brooks".split(" ")[-1]
+
+#Dictionary
+x = {1: "avra", 2: "christopher"}
+
+for i in x.keys():
+    print(x[i])                                  #returns '1, 2'
+
+for i in x.values():
+    print(x[i])                                  #returns 'avra, christopher'
+
+for i, j in x.items():
+    print(i,j)                                   #returns both key-value pairs
+
+#Defining a variable - to add or substract
+def do_math(a, b, kind):
+  if (kind=='add'):
+    return a+b
+  else:
+    return a-b
+do_math(1, 2, 'add')
+
