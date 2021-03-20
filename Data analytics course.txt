@@ -1,4 +1,4 @@
-#Creating a list and printing its items
+Creating a list and printing its items
 x = [1, 2, "a", "b"]
 
 for i in x:
@@ -46,4 +46,142 @@ def do_math(a, b, kind):
   else:
     return a-b
 do_math(1, 2, 'add')
+
+#Using Map function
+people = ['Dr. Christopher Brooks', 'Dr. Kevyn Collins-Thompson', 'Dr. VG Vinod Vydiswaran', 'Dr. Daniel Romero']
+def split_title_and_name (person):
+    title = person.split()[0]
+    lastname = person.split()[-1]
+    return '{} {}'.format(title, lastname)
+list(map(split_title_and_name, people))
+
+#Using Lambda function
+people = ['Dr. Christopher Brooks', 'Dr. Kevyn Collins-Thompson', 'Dr. VG Vinod Vydiswaran', 'Dr. Daniel Romero']
+def split_title_and_name(person):
+    return person.split()[0] + ' ' + person.split()[-1]
+list(map(split_title_and_name, people)) == list(map(lambda person: person.split()[0] + ' ' + person.split()[-1], people))
+
+#Datetime & Time function
+import datetime as dt
+import time as tm
+tm.time()                                                          
+
+dt_now = dt.datetime.fromtimestamp(tm.time())
+dt_now
+
+delta = dt.timedelta(days=100)                                  #100 days before today
+today = dt.date.today()
+print(today-delta)                                              #will print the date 100 days before
+
+#Assignment-1 using regular expressions(regex)
+import re
+simple_string = ("Amy is 5 years old, and her sister Mary is 2 years old. Ruth and Peter, their parents, have 3 kids.")
+def names (string):
+    name = " ".join(re.findall(r"[A-Z]\w+", string))
+    print(name)
+    print(len(name.split()))
+names(simple_string)
+
+import re
+with open ("C:/Users/Administrator/Downloads/vvv.txt", "r") as file:
+    grades = file.read()
+re.findall(re.escape("\n") + "(.*)" + re.escape(": B"), grades) 
+
+import re
+with open ("C:/Users/Administrator/Downloads/vvv.txt", "r") as file:
+    logdata = file.read()
+x = logdata.split("\n")
+list_all=[] 
+dict_log={} 
+for item in x:
+    pos_1=item.find(' - ')
+    IP=item[:pos_1]
+    username=re.findall(re.escape(' - ')+"(.*)"+re.escape(' ['),item)[0]
+    date=re.findall(re.escape(' [')+"(.*)"+re.escape('] '),item)[0]
+    post_request_type=re.findall(re.escape('"')+"(.*)"+re.escape('"'),item)[0]
+    dict_log['host'] = IP
+    dict_log['user_name'] = username
+    dict_log['time'] = date
+    dict_log['request'] = post_request_type
+    list_all.append(dict_log.copy())
+    dict_log.clear()
+list_all
+
+#NUMPY
+import numpy as np
+a = np.array([1,2,3])
+print(a)
+print(a.ndim)                                                         #returns '1'
+print(a.shape)                                                        #returns (3,1)
+print(a.dtype)                                                        #returns 'int32', one row takes 32 byte
+
+b = np.ones((2,3))
+b                                                                     #(2,3) matrix with all elements as '1'
+
+c = np.random.rand(2,3)
+print(c)
+
+d = np.arange(10,20,2)                                                #output - 'array([10, 12, 14, 16, 18])'
+d                                                                     #from 10 to 15 with difference of 2
+
+e = np.linspace(10,15,10)                                             #10 numbers from 10 to 15
+e                                                                     #LINSPACE - check spelling
+
+farenheit = np.array([0, 37, 98, 103])
+celcius = (farenheit + 32)/(1.8)
+celcius
+
+h = np.arange(1,16).reshape(3,5)                                      #elements 1-15, reshaped into (3,5)
+h
+
+#MATRIX MULTIPLICATION
+f = np.array([[1,2], [3,4]])                                          #two [] brackets has to be present
+g = np.array([[4,5], [6,7]])
+print(f@g)                                                            #matrix multiplication, not element-wise multiplication
+
+#IMAGE module from PIL(python image library)
+from PIL import Image
+from IPython.display import display
+im = Image.open("C:/Users/Administrator/Downloads/rupsa.jpg")
+display(im)                                                           #printing the image
+pic_array = np.array(im)
+print(pic_array)
+print(pic_array.shape)                                                #output - '(800, 640, 3)'
+
+mask = np.full(pic_array.shape, 255)                                  #to make all elements in the array as '255'
+mask
+
+modified_array = mask-pic_array                                       #substracting each element from (mask - pic_array)
+modified_array = modified_array.astype(np.uint8)                      #this line is mandatory to display the new image
+modified_array
+
+display(Image.fromarray(modified_array))                              #image with different colour concentration
+
+reshaped_array = np.reshape(modified_array, (200,150))                #only if black&White image
+display(Image.fromarray(reshaped_array))
+
+#Indexing
+a = np.array([[1,2], [3,4], [5,6]])
+a[1,1]                                                                #returns '4'
+
+np.array([a[0,0], a[1,1], a[2,0]])                                    #(1,4,5)
+#OR
+np.array(a[[0,1,2], [0,1,0]])                                         #(1,4,5)
+
+#Slicing
+a = np.array([1,2,3,4,5])
+print(a[:3])                                                          #donot print element(3), output-(1,2,3) 
+print(a[2:4])                                                         #output - (3,4)
+
+b = np.array([[1,2,3,4], [5,6,7,8], [9,10,11,12]])
+print(b[:2])                                                          #all elements from 1st-two rows, index '0 & 1'
+print(b[:2, 1:3])                                                     #(2,3,6,7)
+print(b[:, 0])                                                        #all rows & 1st column
+
+#Datasets with Numpy
+df = np.genfromtxt("C:/Users/Administrator/Downloads/vvv.txt")        #to load datasets from external 'csv OR txt' file
+df
+
+#REGEX (manipulating text)
+ 
 
