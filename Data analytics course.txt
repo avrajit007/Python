@@ -1,4 +1,4 @@
-Creating a list and printing its items
+#Creating a list and printing its items
 x = [1, 2, "a", "b"]
 
 for i in x:
@@ -72,40 +72,6 @@ dt_now
 delta = dt.timedelta(days=100)                                  #100 days before today
 today = dt.date.today()
 print(today-delta)                                              #will print the date 100 days before
-
-#Assignment-1 using regular expressions(regex)
-import re
-simple_string = ("Amy is 5 years old, and her sister Mary is 2 years old. Ruth and Peter, their parents, have 3 kids.")
-def names (string):
-    name = " ".join(re.findall(r"[A-Z]\w+", string))
-    print(name)
-    print(len(name.split()))
-names(simple_string)
-
-import re
-with open ("C:/Users/Administrator/Downloads/vvv.txt", "r") as file:
-    grades = file.read()
-re.findall(re.escape("\n") + "(.*)" + re.escape(": B"), grades) 
-
-import re
-with open ("C:/Users/Administrator/Downloads/vvv.txt", "r") as file:
-    logdata = file.read()
-x = logdata.split("\n")
-list_all=[] 
-dict_log={} 
-for item in x:
-    pos_1=item.find(' - ')
-    IP=item[:pos_1]
-    username=re.findall(re.escape(' - ')+"(.*)"+re.escape(' ['),item)[0]
-    date=re.findall(re.escape(' [')+"(.*)"+re.escape('] '),item)[0]
-    post_request_type=re.findall(re.escape('"')+"(.*)"+re.escape('"'),item)[0]
-    dict_log['host'] = IP
-    dict_log['user_name'] = username
-    dict_log['time'] = date
-    dict_log['request'] = post_request_type
-    list_all.append(dict_log.copy())
-    dict_log.clear()
-list_all
 
 #NUMPY
 import numpy as np
@@ -183,5 +149,251 @@ df = np.genfromtxt("C:/Users/Administrator/Downloads/vvv.txt")        #to load d
 df
 
 #REGEX (manipulating text)
+import re                                                             #importing 'REGULAR EXPRESSION'
+text = "this is a good day"
+if re.search("good", text):
+    print("Wonderfull")
+else:
+    print("Alas")                                                     #output- 'wonderfull'
+
+text = "Amy works diligently. Amy gets good grades so students like Amy is successful"
+re.findall("Amy", text)                                                                      #output- 'Amy Amy Amy'
+re.split("Amy", text)                                                                        #output- '' works diligently. ', ' gets good grades so students like ', ' is successful''
+
+#Patterns & charecter class
+grades = "ACAAABCBCBAA"
+re.findall("B", grades)                                               #output- 'B B B'
+re.findall("AB", grades)                                              #only 1 'AB' is present in the string 'grades'
+re.findall("[A][B-C]", grades)                                        #should start with 'A', after that either 'B' or 'C'
+re.findall("[^A]", grades)                                            #['C', 'B', 'C', 'B', 'C', 'B'], shows results which is not 'A' 
+re.findall("^[A]", grades)                                            #output- ['A'], begining with 'A'
+
+#Using regex on text files & to understand quantifiers
+import re
+with open("C:/Users/Administrator/Downloads/ferpa.txt", "r") as f:
+    wiki = f.read()                                                   #to read a text file called 'ferpa'
+wiki
+
+re.findall("[\w]*\[edit\]", wiki)                                     #find all the headings, as "[edit]" is present beside every heading, since txt from wikipedia
+re.findall("[\w ]*\[edit\]", wiki)                                    #the previous one only found the last word before edit, but including space after '\w' the whole heading was found
+for headings in re.findall("[\w ]*\[edit\]", wiki):
+    print(re.split("[\[]", headings)[0])                              #only the headings were printed this time, not the '[edit]'
+
+#OR same output using 'FINDITER' function
+for item in re.finditer("([\w ]*)(\[edit\])", wiki):
+    print(item.group(1))
+
+#LOOK-AHEAD & LOOK-BEHIND
+
+
+
+
+
+
+
+#Assignment-1 using regular expressions(regex)
+import re
+simple_string = ("Amy is 5 years old, and her sister Mary is 2 years old. Ruth and Peter, their parents, have 3 kids.")
+def names (string):
+    name = " ".join(re.findall(r"[A-Z]\w+", string))
+    print(name)
+    print(len(name.split()))
+names(simple_string)
+
+import re
+with open ("C:/Users/Administrator/Downloads/vvv.txt", "r") as file:
+    grades = file.read()
+re.findall(re.escape("\n") + "(.*)" + re.escape(": B"), grades) 
+
+import re
+with open ("C:/Users/Administrator/Downloads/vvv.txt", "r") as file:
+    logdata = file.read()
+x = logdata.split("\n")
+list_all=[] 
+dict_log={} 
+for item in x:
+    pos_1=item.find(' - ')
+    IP=item[:pos_1]
+    username=re.findall(re.escape(' - ')+"(.*)"+re.escape(' ['),item)[0]
+    date=re.findall(re.escape(' [')+"(.*)"+re.escape('] '),item)[0]
+    post_request_type=re.findall(re.escape('"')+"(.*)"+re.escape('"'),item)[0]
+    dict_log['host'] = IP
+    dict_log['user_name'] = username
+    dict_log['time'] = date
+    dict_log['request'] = post_request_type
+    list_all.append(dict_log.copy())
+    dict_log.clear()
+list_all
+
+#PANDAS(to work on data-frames)
+import pandas as pd
+students = ["Alice", "Jack", "Moly"]                                  #using 'SERIES' function
+pd.Series(students)                                                   #output- "Alice,Jack,Moly dtype: object", 1-D dataframe
+
+numbers = [1, 2, 3,4]
+pd.Series(numbers)
+
+#Location function("iloc-index location", "loc-location")- this function only show the 'values' of the dictionary
+import pandas as pd
+students ={"Alice": "Physics", 
+           "Jack": "Chemistry", 
+           "Moly": "English", 
+           "Sam": "History"}
+df = pd.Series(students)                                              #'pd.DataFrame' function cannot be used since only 1 row is present, i.e. only 1 dictionary
+df                                                                    #output- 'Alice      Physics, Jack     Chemistry, Moly       English, Sam        History, dtype: object'
+df.iloc[3]                                                            #output- 'History'
+df.loc["Sam"]                                                         #output- 'History'
+
+#Simple loop to add numbers present in a series
+grades = pd.Series( [90, 70, 80, 60] )
+total = 0                                                             #initiate a varible where the sum will be stored
+for i in grades:                                                      #'i' will be 90,70,80,60 respectively for each loop
+    total = total+i
+print(total)                                                          #output- '300'
+#OR can be also directly be done using 'NUMPY'
+import pandas as pd
+import numpy as np
+grades = pd.Series( [90, 70, 80, 60] )
+total = np.sum(grades)
+total
+
+#DataFrame (using PANDAS)
+import pandas as pd
+r1 = pd.Series({"Name": "Alice", "Sub": "Physics", "Score": 85})
+r2 = pd.Series({"Name": "Jack", "Sub": "Chemistry", "Score": 82})
+r3 = pd.Series({"Name": "Helen", "Sub": "Biology", "Score": 90})
+df = pd.DataFrame([r1, r2, r3], index = ["School 1", "School 2", "School 3"])        
+print(df)                                                                     #can be directly created using a list where the values are dictionaries r1,r2,r3
+
+df.iloc[2]                                                            #output- "Name       Helen Sub      Biology Score         90 Name: School 3, dtype: object"
+df.loc["School 2"]                                                    #cannot mention 'Jack' insted of 'School 2', else error
+df.loc["School 2"]["Name"]                                            #output- 'Jack'
+df.drop("School 2")                                                   #Deletes entire row "School 2"
+df["Ranking"] = ["2nd", "3rd", "1st" ]                                #ADDING a new 'Column' in the DataFrame
+
+#Loading DataFrame from csv file
+import pandas as pd
+df = pd.read_csv("C:/Users/Administrator/Downloads/admission_predict.csv")
+df.head()
+df = pd.read_csv("C:/Users/Administrator/Downloads/admission_predict.csv", index_col = 0)                  #to set first column as index
+df1 = df.rename(columns = {"GRE Score": "GRE", "University Rating": "UR"})                                 #renaming column names  
+
+#DataFrame queries
+mask = df["Chance of Admit "] > 0.7
+mask                                                                  #will show only the chance of admit column, and shows 'True' for values which satisfies condtion & 'False' for others
+df.where(mask)                                                        #Boolean mask using 'WHERE' function, shows 'NaN' values for entire row whose value is 'False' in above code
+df.where(mask).dropna()                                               #removes the rows with 'NaN' values
+
+#OR 'Boolean mask' can be directly applied using single code
+df [df["Chance of Admit "] > 0.7]                                     #removes all rows that does not satisfies the condition
+
+#Multiple condition
+(df["Chance of Admit "] > 0.7) & (df["SOP"] > 4)                      #will show 'True' or 'False' for every index/rows 
+
+#Indexing DataFrame
+import pandas as pd
+df = pd.read_csv("C:/Users/Administrator/Downloads/admission_predict.csv", index_col = 0) 
+df.head(2)
+
+#OR using 'set_index()' function
+df = pd.read_csv("C:/Users/Administrator/Downloads/admission_predict.csv")
+df.set_index("Serial No.").head(3)
+
+#To 'RESET' index
+df.reset_index().head(3)
+
+df = df[df["University Rating"] == 5]                                 #applying a Boolean mask
+
+#Multi-indexing
+df["University Rating"].unique()                                      #shows different values that are present in the column 'University Rating', o/p- "array([4, 3, 2, 5, 1], dtype=int64)"
+df = df.set_index(["University Rating", "Serial No."])                #multi-level indexing is set
+df                                
+
+#Taking 'census' DataFrame
+import pandas as pd
+df = pd.read_csv("C:/Users/Administrator/Downloads/census.csv")
+df.head(3)
+
+df["SUMLEV"].value_counts()                                           #to count number of different values present in a column
+
+df = df[df["SUMLEV"] == 50]                                           #removing all rows, whose 'SUMLEV' value is other than 50 (i.e. removing 40)
+df.head(5) 
+
+#SELECTING only the 'COLUMNS' that we want to KEEP/SHOW
+columns_to_keep = ['STNAME','CTYNAME','BIRTHS2010','BIRTHS2011','BIRTHS2012','BIRTHS2013','BIRTHS2014','BIRTHS2015',
+                  'POPESTIMATE2010','POPESTIMATE2011','POPESTIMATE2012','POPESTIMATE2013','POPESTIMATE2014','POPESTIMATE2015']
+df = df[columns_to_keep]
+df.head(4)
+
+df = df.set_index( ["STNAME", "CTYNAME"] )
+df                                                                    #multi-indexing
+
+df.loc[ [('Alabama', 'Baldwin County'), ('Wyoming', 'Weston County')] ]               #DataFrame querying
+
+#Missing Values
+import pandas as pd
+df = pd.read_csv("C:/Users/Administrator/Downloads/class_grades.csv")                 #'class_grade' dataFrame is loaded
+df.head(6)
+df.dropna().head(6)                                                   #removes 'NaN' values
+
+#Filling of 'NaN' values (fillna(), Forward filling & Backward filling)
+df.fillna(0).head(6)                                                                  #'NaN' is given a value that is assigned by us
+df.fillna(method = "ffill")                                           #Forward filling will assign the previous valid value to the 'NaN' values
+df.fillna(method = "bfill")                                           #opposite of 'ffill', BEFORE USING 'ffill & bfill' data has to be sorted based on index, else not work
+
+#Woking with 'log' dataset
+import pandas as pd
+df = pd.read_csv("C:/Users/Administrator/Downloads/log.csv")
+df.head(5)
+
+df.sort_index()                                                       #to 'SORT INDEX'
+df.set_index(["user", "time"]).head(6)                                #multi-indexing
+
+#Using 'REPLACE' function with help of 'Regex'
+pattern = "[\w]*[.]html$"                                             #to search for the given pattern anywhere in the table, so column name need not be mentioned
+df.replace(to_replace= pattern, value= "webpage", regex=True)         #replace the whole word which satisfies the pattern by the word 'webpage'
+
+#Manipulating DataFrame
+import pandas as pd
+df = pd.read_csv("C:/Users/Administrator/Downloads/presidents.csv")
+df.head(5)
+
+df["Copy"] = df["President"]                                          #coping the value of the 'President' column into a new column called 'Copy'
+df.head(5)
+
+#Splitting the 'President' column into 'First' & 'Last' name using 'APPLY' function
+def split_name (row):                                                 #function name is 'split_name', parameter name is 'row'
+    row["First"] = row["President"].split(" ")[0]                     #split column 'President' into 2 parts from 'SPACE' and take the index '0'
+    row["Last"] = row["President"].split(" ")[-1]                     #split column 'President' into 2 parts from 'SPACE' and take the index '-1'
+    return row
+df = df.apply(split_name, axis = 1)                                   #use of apply function on function 'split_name' (column-wise), insted of '1' we can also write 'columns'
+df.head(5)
+
+del(df["First"])                                    
+del(df["Last"])                                                       #DELETING COLUMNS
+
+#Applying Splitting using 'EXTRACT' FUNCTION
+pattern = "(^[\w]*)(?:.* )([\w]*$)"                                   #group function is used(3 groups)
+df["President"].str.extract(pattern).head()
+
+#OR if we want to give names to our columns
+pattern = "(?P<First>^[\w]*)(?:.* )(?P<Last>[\w]*$)"                  #"?P<name>" is for giving names to the column, rest all are the same 
+n = df["President"].str.extract(pattern).head()
+n                                                                     #prints only the 'First' & 'Last' column
+df["First"] = n["First"]   
+df["Last"] = n["Last"]                                                #copying rows 'First' & 'Last' into the main DataFrame 'df'
+df.head()
+
+#Format change of 'Date' in 'Born' column using 'to_datetime' function
+pattern = "([\w]{3} [\w]{1,2}, [\w]{4})"                              #first bracket () is mandatory after ""
+df["Born"] = df["Born"].str.extract(pattern)
+df["Born"].head()
+df["Born"] = pd.to_datetime(df["Born"])                               #using "pd.to_datetime function"
+df["Born"].head(1)                                                    #output- "1732-02-22"
+
+
+
+
+
  
 
