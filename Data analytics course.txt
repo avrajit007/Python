@@ -391,6 +391,113 @@ df["Born"].head()
 df["Born"] = pd.to_datetime(df["Born"])                               #using "pd.to_datetime function"
 df["Born"].head(1)                                                    #output- "1732-02-22"
 
+#Merging(horizontally) DataFrame (union=outer join, intersection=inner join)
+import pandas as pd
+staff = pd.DataFrame( [ {"Name": "Kelly", "Role": "HR"},
+                     {"Name": "Sally", "Role": "Course liason"},
+                     {"Name": "James", "Role": "Grader"} ] )
+staff = staff.set_index("Name")
+student = pd.DataFrame( [ {"Name": "James", "Role": "Business"},
+                     {"Name": "Mike", "Role": "Law"},
+                     {"Name": "Sally", "Role": "Engineering"} ] )
+student = student.set_index("Name")
+print(staff)
+print(student)
+
+pd.merge(staff, student, how = "outer", left_index=True, right_index=True)      #A union B
+pd.merge(staff, student, how = "inner", left_index=True, right_index=True)      #A intersection B
+pd.merge(staff, student, how = "left", left_index=True, right_index=True)       #A
+pd.merge(staff, student, how = "right", left_index=True, right_index=True)      #B
+
+#Merging using 'on' parameter(no need for index)
+pd.merge(staff, student, how = "outer", on = "Name")                            #A union B, without setting index
+
+#Multi-indexing using 'on' parameter
+import pandas as pd
+staff = pd.DataFrame( [ {"First_name": "Kelly", "Last_name": "Green", "Role": "HR"},
+                     {"First_name": "Sally", "Last_name": "Blue", "Role": "Course liason"},
+                     {"First_name": "James", "Last_name": "Red", "Role": "Grader"} ] )
+student = pd.DataFrame( [ {"First_name": "James", "Last_name": "Red", "Role": "Business"},
+                     {"First_name": "Mike", "Last_name": "Smith", "Role": "Law"},
+                     {"First_name": "Sally","Last_name": "Blue", "Role": "Engineering"} ] )
+pd.merge(staff, student, how = "outer", on = ["First_name", "Last_name"])
+
+#Concatenation(vertically) of Dataframe
+import pandas as pd
+frames = [staff, student]
+pd.concat(frames)
+
+#PANDAS IDIOMS
+#Using 'apply' function within a defined function
+import pandas as pd
+import numpy as np
+df = pd.read_csv("C:/Users/Administrator/Downloads/census.csv")
+def min_max(row):
+    data = row[ ['POPESTIMATE2010','POPESTIMATE2011','POPESTIMATE2012',
+                'POPESTIMATE2013','POPESTIMATE2014','POPESTIMATE2015'] ]        #double [ [] ] is required to specify- 1.list & 2.index(columns)
+    return pd.Series( {"Min": np.min(data), "Max": np.min(data)} )
+df.apply(min_max, axis = 1)                                                     #can also be mentioned 'columns' within "" insted of '1' 
+
+#OR To add min & max column to the original DataFrame
+def min_max(row):
+    data = row[ ['POPESTIMATE2010','POPESTIMATE2011','POPESTIMATE2012',
+                'POPESTIMATE2013','POPESTIMATE2014','POPESTIMATE2015'] ]
+    row["min"] = np.min(data)
+    row["max"] = np.max(data)
+    return row
+df.apply(min_max, axis = 1)
+
+#OR (using lambda function)
+data = ['POPESTIMATE2010','POPESTIMATE2011','POPESTIMATE2012',
+                'POPESTIMATE2013','POPESTIMATE2014','POPESTIMATE2015'] 
+df.apply(lambda x: np.max(x[data]), axis = 1)
+
+#GROUP-BY (to speed up task)
+import pandas as pd
+import numpy as np
+df = pd.read_csv("C:/Users/Administrator/Downloads/census.csv")
+df = df[df["SUMLEV"] == 50]
+for state in df["STNAME"].unique():
+    avg = np.average(df.where(df["STNAME"] == state).dropna() ["CENSUS2010POP"])     #'state' is a variable showing name of the state & avg of 'CENSUS2010' for all states
+    print("Avg of 2010 pop of " + state + " is " + str(avg))
+
+#OR (by using "GROUPBY" function)
+for group, frame in df.groupby("STNAME"):                                            #in 'STNAME' () should be used not [], since not an index now
+    avg = np.average(frame["CENSUS2010POP"])
+    print("Avg of 2010 pop of " + group + " is " + str(avg))
+
+#Function using 'groupby'
+df = df.set_index("STNAME")                                                          #need to set 'STNAME' as index, else not work OR 'STNAME' is to given as groupby parameter
+def batch_no(item):
+    if item[0] < "M":                                                                #'0' is the index, signifying first alphabet of the 'STNAME'
+        return 0
+    if item[0] < "Q":
+        return 1
+    else:
+        return 2
+for group, frame in df.groupby(batch_no):                                            
+    print( str(len(frame)) + " records are there in group" + str(group) + " for processing" )           #output- "1177 records are there in group0 for processing"
+
+#Using GROUPBY on 'listings' dataset (airbnb listing of rooms)
+import pandas as pd
+import numpy as np
+df = pd.read_csv("C:/Users/Administrator/Downloads/listings.csv")
+df["cancellation_policy"].unique()                                                   #values present- "(['moderate', 'flexible', 'strict', 'super_strict_30'], dtype=object)"
+df["review_scores_value"].unique()                                                   #values present- "([nan,  9, 10,  6,  8,  7,  2,  4,  3,  5])"
+df = df.set_index( ["cancellation_policy", "review_scores_value"] )                  #setting multi-indexing for applying 'GROUPBY'
+for group,frame in df.groupby(level = (0,1)):                                        #'0' for 'cancellation_policy' & '1' for 'review_scores_value'
+    print(group) 
+
+#Now separating '10' and other than '10' in 'review_scores_value'
+def grouping(item):
+    if item[1] == 10.0:
+        return(item[0], "10")
+    else:
+        return(item[0], "not 10")
+for group, frame in df.groupby(by = grouping):
+    print(group)
+
+
 
 
 
