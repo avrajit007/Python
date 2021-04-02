@@ -497,6 +497,135 @@ def grouping(item):
 for group, frame in df.groupby(by = grouping):
     print(group)
 
+#AGGREGATION(to apply single function in multiple column/groups)              
+#groupby("column1").agg( {"column2" : function})
+
+df = df.reset_index()                                                               #the index is reset
+df.groupby("cancellation_policy").agg({"review_scores_value": np.nanmean})          #using mean function on 'review_scores_value' for 'cancellation_policy'
+
+df.groupby("cancellation_policy").agg({"review_scores_value": np.nanmean,           #using mean function on 'review_scores_value' & std dev on 'reviews_per_month' for 'cancellation_policy'
+                                      "reviews_per_month": np.nanstd})
+
+#TRANSFORMATION(returns a new dataframe and returns value equal to the group i.e number of column observations)
+#[["column1", "column2"]]groupby("column1").transform(function)
+
+df1 = df[ ["cancellation_policy", "review_scores_value"] ].groupby("cancellation_policy").transform(np.nanmean)
+df1.head(3)
+
+#FILTRATION(applies a function & returns true/false based on group shold be included in result or not)
+#groupby("column1").filter(function, column2, condition)
+
+df.groupby("cancellation_policy").filter(lambda x: np.nanmean(x["review_scores_value_x"]) > 9.2)
+
+#APPLY FUNCTION(to apply any function to each groups and stitch the results back together)
+#Calculation of mean difference(mean - x)
+
+import pandas as pd
+import numpy as np
+df = pd.read_csv("C:/Users/Administrator/Downloads/listings.csv")                   #again the dataframe 'listing' for airbnb is imported
+df = df[ ["cancellation_policy", "review_scores_value"] ]                           #new dataframe is made by using only 2 columns 
+def mean_review(group):                                                             #function 'mean review' is defined
+    avg = np.nanmean(group["review_scores_value"])                                  #mean of 'review_scores_value' is calculated and stored in variable 'avg'
+    group["review_mean"] = np.abs(avg - group["review_scores_value"])               #new column 'review_mean' is generated ehich is equal to absolute value of (mean -x)
+    return group
+df.groupby("cancellation_policy").apply(mean_review).head()
+
+#SCALES(Ratio-numeric, Interval-temprature, Ordinal-blood group, Nominal-catagorical(teams))
+import pandas as pd
+df = pd.DataFrame(["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "D", "D-"],
+                 index= ["Excellent", "Very good", "Very good", "Good", "Good", "Ok", "Poor", "Poor", "Very poor", "Very poor"],
+                 columns = ["Grades"])
+
+#To tell Python about the order of the data
+category_data = pd.CategoricalDtype( categories= ["D-", "D", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"],
+                              ordered = True)
+g = df["Grades"].astype(category_data)                                             #apply the 'category_data' variable to
+g[ g > "B+" ]                                                                      #output- "A+, A, A-"
+
+#CUT function
+import pandas as pd
+import numpy as np
+df = pd.read_csv("C:/Users/Administrator/Downloads/census.csv")
+df = df[ df["SUMLEV"] == 50 ]
+df = df.set_index("STNAME").groupby(level = 0)["CENSUS2010POP"].agg(np.average)
+pd.cut(df, 10)
+
+#PIVOT TABLE(also a Dataframe where its row=column1, column=column2)
+import pandas as pd
+import numpy as np
+df = pd.read_csv("C:/Users/Administrator/Downloads/university_ranking.csv")    
+def category(ranking):                                                             #column name on the original dataframe is 'world_rank'
+    if (ranking >= 1) & (ranking <= 100):                                          #variable name - 'ranking'
+        return "First tier University"
+    elif (ranking > 100) & (ranking <= 200):
+        return "Second tier University"
+    elif (ranking > 200) & (ranking <= 300):
+        return "Third tier University"
+    return "Other top University"                                                  #can not use another 'elif'
+df["rank_level"] = df["world_rank"].apply(lambda x: category(x))                   #adding new column named 'rank_level'
+df.pivot_table(values = "score", index = "country", columns = "rank_level",        #compare mean score from column 'score' for each 'country' based on 'rank_level'
+               aggfunc = [np.mean]).head()
+
+df.pivot_table(values = "score", index = "country", columns = "rank_level",        #2 functions simultanously- min & max 'score'
+               aggfunc = [np.min, np.max]).head()
+
+p = df.pivot_table(values = "score", index = "country", columns = "rank_level", 
+               aggfunc = [np.mean], margins = True)                                #'margin' shows mean of each row in the PIVOT TABLE as well
+
+#Use if 'idxmax' function to find the max mean
+p["mean"]["First tier University"].idxmax()                                        #returns 'United Kingdom'
+
+#Changing shape of the Pivot table(Stack & Unstack)
+#Stack- lowermost column to innermost row, Unstack is just the opposite
+
+p = p.stack()
+p.head(10)
+
+p = p.unstack().unstack()                                                          #2 times unstacked
+p.head(10)     
+
+#Date/Time functionality(Timestamp, Period & their respective index)
+#Timestamp (point of time)
+
+pd.Timestamp("2021-04-02 00:17:00")                                                #APRIL 2nd 2021
+pd.Timestamp(2021, 4, 2, 0, 17)                                                    #both Time-stamp gives the same output
+
+pd.Timestamp(2021, 4, 2, 0, 17).isoweekday()                                       #output- 5, which means its 'Friday' also Good Friday today
+
+#Peroid (span of time)
+pd.Period("2021-04")                                                               #output- "Period('2021-04', 'M')", which means Month
+pd.Period("2021-04-02")                                                            #output- "Period('2021-04-02', 'D')", which means Day
+
+pd.Period("2021-04") + 2                                                           #output- "Period('2021-06', 'M')", i.e. june 2021
+
+#Index of Timestamp & Period
+t1 = pd.Series(list("ab"), [pd.Timestamp("2021-04-02"), pd.Timestamp("2021-09-23")])          #'a' & 'b' are the index of the 2 time
+type(t1.index)                                                                                #returns- 'DatetimeIndex'
+
+t2 = pd.Series(list("cd"), [pd.Period("2021-04"), pd.Period("2021-09")])                      #'c' & 'd' are the index of the 2 Periods
+type(t2.index)                                                                                #returns- 'PeriodIndex'
+
+#Converting Datetime
+import numpy as np
+d1 = ["2 April 2021", "April 2,2021", "2021-04-02", "2021/04/02"]
+df = pd.DataFrame(np.random.randint(10,100, (4,2)), index = d1, columns = list("AB"))         #'4' & '2' for 2 differnt columns
+df.index = pd.to_datetime(df.index)                                                           #all the input dates converted into single format
+
+#Timedelta(difference in time)
+pd.Timestamp("2021-04-02 8:00AM") + pd.Timedelta("2D 3H")                                     #output- 'Timestamp('2021-04-04 11:00:00')'
+
+#OFFSETS (e.g. - Business day)
+pd.Timestamp("2021-04-02 8:00AM") + pd.offsets.Week()                                         #adds 7 days, output- 'Timestamp('2021-04-09 08:00:00')'
+pd.Timestamp("2021-05-02 8:00AM") + pd.offsets.MonthEnd()                                     #shows last day of the month
+
+#DATE-RANGE function(date, periods, freq)
+pd.date_range("2021-04-02", periods = 9, freq = "2W-SUN")                         #shows 9 dates, every alternate sundays after 2nd-April
+pd.date_range("2021-04-02", periods = 5, freq = "B")                              #'Business day', skips 'SAT & SUN' & shows consequtive 5 days
+pd.date_range("2021-04-02", periods = 5, freq = "QS-APR")                         #'Quarter' starts from APRIL, dont write 'APRIL' instead of 'APR'
+
+#STATISTICAL TESTING
+
+
 
 
 
