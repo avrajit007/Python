@@ -623,7 +623,43 @@ pd.date_range("2021-04-02", periods = 9, freq = "2W-SUN")                       
 pd.date_range("2021-04-02", periods = 5, freq = "B")                              #'Business day', skips 'SAT & SUN' & shows consequtive 5 days
 pd.date_range("2021-04-02", periods = 5, freq = "QS-APR")                         #'Quarter' starts from APRIL, dont write 'APRIL' instead of 'APR'
 
-#STATISTICAL TESTING
+#STATISTICAL TESTING 
+import pandas as pd
+df = pd.read_csv("C:/Users/Administrator/Downloads/datasets/grades.csv")
+print("There are {} rows & {} columns".format(df.shape[0], df.shape[1]))
+
+#Students T-test - (ttest_ind)
+#Its is to check if 2 different conditions in an experiment results in a different impact
+#Actual explanation is Ha, explanation that we have is not sufficient Ho
+
+early_finisher = df [ pd.to_datetime( df["assignment1_submission"] ) < "2016"  ]          #Students who finished their 'assignment1' by Dec 2015 will be called as 'early_finisher'
+early_finisher.head()
+
+late_finisher = df [~df.index.isin(early_finisher.index)]                                 #who are not 'early_finisher' are 'late_finisher'
+late_finisher.head()
+
+print(early_finisher ["assignment1_grade"].mean())                                        #mean of "assignment1_grade" of 'early_finisher'
+print(late_finisher ["assignment1_grade"].mean())                                         #mean of "assignment1_grade" of 'late_finisher'
+
+from scipy.stats import ttest_ind                                                         #import 'ttest_ind'
+ttest_ind(early_finisher["assignment1_grade"],  late_finisher["assignment1_grade"])       #PGTARA - p-value greater than alpha reject alternate
+
+#Creating dataframe with 100 columns and try 'ttest'
+import numpy as np
+df1 = pd.DataFrame( [np.random.random(100) for x in range(100)] )
+df2 = pd.DataFrame( [np.random.random(100) for x in range(100)] )
+
+def compare(alpha = 0.1):
+    num_diff = 0
+    for i in df1.columns:
+          teststat, pval = ttest_ind(df1[i], df2[i])
+          if pval <= alpha:
+              num_diff = num_diff + 1
+    print(num_diff)
+
+compare()                                                                                #output- 13
+
+
 
 
 
