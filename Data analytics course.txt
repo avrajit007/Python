@@ -183,13 +183,39 @@ for headings in re.findall("[\w ]*\[edit\]", wiki):
 for item in re.finditer("([\w ]*)(\[edit\])", wiki):
     print(item.group(1))
 
-#LOOK-AHEAD & LOOK-BEHIND
+#GROUPS in REGEX "( ) ( )"
+import re
+with open("C:/Users/Administrator/Downloads/ferpa.txt", "r") as f:
+    wiki = f.read()
+for item in re.finditer("([\w]*)(\[edit\])", wiki):                  #"findall" functions returns 'tuple' & finditer returns 'list'
+    print(item.groups())                                             #if only the 'item' is printed then output will show as 'match object'
 
+for item in re.finditer("([\w]*)(\[edit\])", wiki):
+    print(item.group(1))                                             #"group(0)" will show both the output & "[edit]"
 
+for item in re.finditer("(?P<title>[\w]*)(?P<link>\[edit\])", wiki):     #can name the different groups with "?P<>", returns a dictionary with 'keys' being the 'name' & 'values' being the output 
+    print(item.groupdict()["title"])                                     #to return only the 'title' and not the link                                        
 
+#LOOK-AHEAD & LOOK-BEHIND (before or after the text that we want to isolate)
+#throw-away (?=), to match but not to show in output
 
+for item in re.finditer("(?P<title>[\w]*)(?=\[edit\])", wiki):
+    print(item.group(1))
 
+#LOOK AHEAD & BEHIND with another wikipedia file
+with open("C:/Users/Administrator/Downloads/buddhist.txt", "r") as f:
+        wiki = f.read()
+wiki
 
+pattern = """
+(?P<Name>.*)
+(-\ located\ in\ )
+(?P<City>\w*)
+(,\ )
+(?P<State>\w*)"""                                                       #multi-line pattern
+
+for item in re.finditer(pattern, wiki, re.VERBOSE):                     #'VERBOSE' for multi-line pattern
+    print(item.groupdict())
 
 #Assignment-1 using regular expressions(regex)
 import re
@@ -659,13 +685,4 @@ def compare(alpha = 0.1):
 
 compare()                                                                                #output- 13
 
-
-
-
-
-
-
-
-
- 
 
