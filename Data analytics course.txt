@@ -217,39 +217,7 @@ pattern = """
 for item in re.finditer(pattern, wiki, re.VERBOSE):                     #'VERBOSE' for multi-line pattern
     print(item.groupdict())
 
-#Assignment-1 using regular expressions(regex)
-import re
-simple_string = ("Amy is 5 years old, and her sister Mary is 2 years old. Ruth and Peter, their parents, have 3 kids.")
-def names (string):
-    name = " ".join(re.findall(r"[A-Z]\w+", string))
-    print(name)
-    print(len(name.split()))
-names(simple_string)
 
-import re
-with open ("C:/Users/Administrator/Downloads/vvv.txt", "r") as file:
-    grades = file.read()
-re.findall(re.escape("\n") + "(.*)" + re.escape(": B"), grades) 
-
-import re
-with open ("C:/Users/Administrator/Downloads/vvv.txt", "r") as file:
-    logdata = file.read()
-x = logdata.split("\n")
-list_all=[] 
-dict_log={} 
-for item in x:
-    pos_1=item.find(' - ')
-    IP=item[:pos_1]
-    username=re.findall(re.escape(' - ')+"(.*)"+re.escape(' ['),item)[0]
-    date=re.findall(re.escape(' [')+"(.*)"+re.escape('] '),item)[0]
-    post_request_type=re.findall(re.escape('"')+"(.*)"+re.escape('"'),item)[0]
-    dict_log['host'] = IP
-    dict_log['user_name'] = username
-    dict_log['time'] = date
-    dict_log['request'] = post_request_type
-    list_all.append(dict_log.copy())
-    dict_log.clear()
-list_all
 
 #PANDAS(to work on data-frames)
 import pandas as pd
