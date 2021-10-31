@@ -1,0 +1,37 @@
+import re
+def names():
+    simple_string = """Amy is 5 years old, and her sister Mary is 2 years old. 
+    Ruth and Peter, their parents, have 3 kids."""
+
+    return re.findall('[A-Z][\w]*', simple_string, re.VERBOSE)
+names()
+
+
+
+
+import re
+def grades():
+    with open ("assets/grades.txt", "r") as file:
+        grades = file.read()
+
+        return re.findall('(?P<students>[\w ]*)(?:\: [B])', grades)
+grades()
+
+
+
+
+import re
+def logs():
+    with open("assets/logdata.txt", "r") as file:
+        logdata = file.read()
+        p = '''(?P<host>[\d]{3}\.[\d]{3}\.[\d]{3}\.[\d]{3})
+               (?:\ \-\ )
+               (?P<user_name>[\w]*)
+               (?:\ \[)
+               (?P<time>[\d]{2}\/[\w]{3}\/[\d]{4}\:[\d]{2}\:[\d]{2}\:[\d]{2}\ \-[\d]{4})
+               (?:\]\ \")
+               (?P<request>[\w ]*\ \/[\w]*\ [\w]*\/[\d]{1}\.[\d]{1})
+               (?:\")'''
+        for i in re.finditer(p, logdata, re.VERBOSE):
+            print(i.groupdict())
+logs()
