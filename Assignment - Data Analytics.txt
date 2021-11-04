@@ -107,7 +107,7 @@ answer_two()
 
 
 def answer_three():    
-    Energy = pd.read_excel('e:/assets/Energy Indicators.xls', skiprows=17, skipfooter=38)
+    Energy = pd.read_excel('assets/Energy Indicators.xls', skiprows=17, skipfooter=38)
     Energy = Energy.rename(columns ={'Unnamed: 2': 'Country',
                                  'Petajoules': 'Energy Supply',
                                  'Gigajoules': 'Energy Supply per Capita',
@@ -118,12 +118,12 @@ def answer_three():
     Energy['Country'].replace(['China, Hong Kong Special Administrative Region3', 'Republic of Korea', 'United Kingdom of Great Britain and Northern Ireland19', 'United States of America20', 'Bolivia (Plurinational State of)', 'Switzerland17', 'China2', 'Japan10', 'France6', 'Italy9', 'Spain16', 'Iran (Islamic Republic of)', 'Australia1'], 
                               ['Hong Kong', 'South Korea', 'United Kingdom', 'United States', 'Bolivia', 'Switzerland', 'China', 'Japan', 'France', 'Italy', 'Spain', 'Iran', 'Australia'], 
                               inplace = True)
-    GDP = pd.read_csv('e:/assets/world_bank.csv', skiprows=4)
+    GDP = pd.read_csv('assets/world_bank.csv', skiprows=4)
     GDP = GDP.rename(columns = {'Country Name' : 'Country'})
     GDP['Country'].replace(['Korea, Rep.', 'Iran, Islamic Rep.', 'Hong Kong SAR, China'],
                            ['South Korea', 'Iran', 'Hong Kong'], 
                             inplace = True)
-    ScimEn = pd.read_excel('e:/assets/scimagojr-3.xlsx')
+    ScimEn = pd.read_excel('assets/scimagojr-3.xlsx')
     df = (Energy.merge(GDP).merge(ScimEn))
     df = df [['Country','Energy Supply','Energy Supply per Capita','% Renewable',
               '2006','2007','2008','2009','2010','2011','2012','2013','2014','2015',
