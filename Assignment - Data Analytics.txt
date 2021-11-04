@@ -43,6 +43,8 @@ logs()
 
 ##ASSIGNMENT 3
 
+import pandas as pd
+import numpy as np
 def answer_one():
     Energy = pd.read_excel('e:/assets/Energy Indicators.xls', skiprows=17, skipfooter=38)
     Energy = Energy.rename(columns ={'Unnamed: 2': 'Country',
