@@ -70,3 +70,10 @@ def answer_one():
     df = df[df['Rank']<16]
     df = df.set_index('Country')
     df.sort_values('Rank', inplace = True)
+    return df
+answer_one()
+
+
+
+
+def answer_two():
