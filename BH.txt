@@ -1,0 +1,41 @@
+import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+import seaborn as sns
+
+df = pd.read_excel('e:/cohort.xlsx')
+df['First Order Month'] = df['First Order Date'].apply(lambda x: x.strftime('%Y-%m'))
+
+grouped = df.groupby(['First Order Month', 'Service Month'])
+cohorts = grouped.agg({'Customer': pd.Series.nunique,
+                       'Service Month': "count",
+                       'Taxable amount': np.sum})
+cohorts.rename(columns={'Customer': 'Total_customers',
+                        'Service Month': 'total_invoices'}, inplace=True)
+
+def cohort_period(df):
+    df['cohort_period'] = np.arange(len(df)) + 1
+    return df
+cohorts = cohorts.groupby(level=0).apply(cohort_period)
+
+def cohort_heatmap(cohorts,col,title):
+    size = group_size(cohorts,col)
+    over_time = cohort_over_time(cohorts,size,col)
+    _cohort_heatmap(over_time,title)
+    
+def group_size(cohorts,col):
+    
+    cohorts.reset_index(inplace=True)
+    cohorts.set_index(['First Order Month', 'cohort_period'], inplace=True)
+    return cohorts[col].groupby(level=0).first()
+
+def cohort_over_time(cohorts,group_size,col):
+    return cohorts[col].unstack(0).divide(group_size, axis=1)
+
+def _cohort_heatmap(cohort_over_time,title):
+    plt.figure(figsize=(24, 16))
+    plt.title(title)
+    sns.heatmap(cohort_over_time.T, mask=cohort_over_time.T.isnull(), annot=True, fmt='.0%');
+    
+cohort_heatmap(cohorts, "Total_customers", "Customer Retention")
+cohort_heatmap(cohorts,"Taxable amount","Revenue Retention")
