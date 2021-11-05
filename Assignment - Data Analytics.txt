@@ -41,6 +41,23 @@ logs()
 
 
 
+
+##ASSIGNMENT 2
+
+def average_influenza_doses():
+    import numpy as np
+    import pandas as pd
+    df = pd.read_csv('assets/NISPUF17.csv')
+    df = df[df['CBF_01']<3]
+    m = np.nanmean(df[df['CBF_01']==1]['P_NUMFLU'])
+    n = np.nanmean(df[df['CBF_01']==2]['P_NUMFLU'])
+    p = (m,n)
+    print(p) 
+average_influenza_doses()
+
+
+
+
 ##ASSIGNMENT 3
 
 import pandas as pd
