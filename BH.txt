@@ -6,6 +6,8 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 
 df = pd.read_excel('e:/cohort.xlsx')
+df['Service End'] = pd.to_datetime(df['Service End'])
+df = df[df['Service End'] >= '2018-04-01']
 df['First Order Month'] = df['First Order Date'].apply(lambda x: x.strftime('%Y-%m'))
 
 grouped = df.groupby(['First Order Month', 'Service Month'])
@@ -37,7 +39,7 @@ def cohort_over_time(cohorts,group_size,col):
 def _cohort_heatmap(cohort_over_time,title):
     plt.figure(figsize=(24, 16))
     plt.title(title)
-    sns.heatmap(cohort_over_time.T, mask=cohort_over_time.T.isnull(), annot=True, fmt='.0%');
+    sns.heatmap(cohort_over_time.T, mask=cohort_over_time.T.isnull(), annot=True, fmt='.0%')
     
 cohort_heatmap(cohorts, "Total_customers", "Customer Retention")
 cohort_heatmap(cohorts,"Taxable amount","Revenue Retention")
