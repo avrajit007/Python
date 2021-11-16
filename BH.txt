@@ -79,4 +79,7 @@ cohort_counts = cohort_data.pivot(index='CohortMonth',
                                  values = 'Customer')
 cohort_sizes = cohort_counts.iloc[:,0]
 retention = cohort_counts.divide(cohort_sizes, axis=0)
-retention.round(3)*100
+f = retention.round(3)*100
+excel = pd.ExcelWriter('Customer.xlsx', engine = 'xlsxwriter')
+f.to_excel(excel, sheet_name = 'Sheet1')
+excel.save()
