@@ -55,7 +55,7 @@ import datetime as dt
 df = pd.read_excel('e:/cohort.xlsx')
 df['Service End'] = pd.to_datetime(df['Service End'])
 df = df[(df['Service End'] >= '2018-04-01') & (df['Service End'] < '2021-10-01')]
-df['First Order Month'] = df['First Order Date'].apply(lambda x: x.strftime('%Y-%m'))
+
 def get_month(x): 
     return dt.datetime(x.year, x.month, 1) 
 df['TransactionMonth'] = df['Service End'].apply(get_month) 
