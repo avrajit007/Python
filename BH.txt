@@ -43,3 +43,40 @@ def _cohort_heatmap(cohort_over_time,title):
     
 cohort_heatmap(cohorts, "Total_customers", "Customer Retention")
 cohort_heatmap(cohorts, "Taxable amount","Revenue Retention")
+
+
+
+##CUSTOMER RETENTION TABLE
+
+import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+import datetime as dt
+df = pd.read_excel('e:/cohort.xlsx')
+df['Service End'] = pd.to_datetime(df['Service End'])
+df = df[(df['Service End'] >= '2018-04-01') & (df['Service End'] < '2021-10-01')]
+df['First Order Month'] = df['First Order Date'].apply(lambda x: x.strftime('%Y-%m'))
+def get_month(x): 
+    return dt.datetime(x.year, x.month, 1) 
+df['TransactionMonth'] = df['Service End'].apply(get_month) 
+grouping = df.groupby('Customer')['TransactionMonth'] 
+df['CohortMonth'] = grouping.transform('min')
+def get_date_int(dff, column):
+    year = dff[column].dt.year
+    month = dff[column].dt.month
+    day = dff[column].dt.day
+    return year, month, day
+transcation_year, transaction_month, _ = get_date_int(df, 'TransactionMonth')
+cohort_year, cohort_month, _ = get_date_int(df, 'CohortMonth')
+years_diff = transcation_year - cohort_year
+months_diff = transaction_month - cohort_month
+df['CohortIndex'] = years_diff * 12 + months_diff  + 1 
+grouping = df.groupby(['CohortMonth', 'CohortIndex'])
+cohort_data = grouping['Customer'].apply(pd.Series.nunique)
+cohort_data = cohort_data.reset_index()
+cohort_counts = cohort_data.pivot(index='CohortMonth',
+                                 columns ='CohortIndex',
+                                 values = 'Customer')
+cohort_sizes = cohort_counts.iloc[:,0]
+retention = cohort_counts.divide(cohort_sizes, axis=0)
+retention.round(3)*100
