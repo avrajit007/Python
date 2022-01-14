@@ -99,6 +99,8 @@ cohort_sizes.head()
 retention = cohort_counts.divide(cohort_sizes, axis=0).round(3)*100
 retention.head()
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 #WRITING TO AN EXCEL FILE
 
 excel = pd.ExcelWriter('Customer.xlsx', engine = 'xlsxwriter')
