@@ -1,4 +1,4 @@
-##COHORT ANALYSIS(CUSTOMER & REVENUE RETENSION)
+##COHORT ANALYSIS(CUSTOMER & REVENUE RETENSION) HEATMAP
 
 import pandas as pd
 import numpy as np
@@ -44,7 +44,7 @@ def _cohort_heatmap(cohort_over_time,title):
 cohort_heatmap(cohorts, "Total_customers", "Customer Retention")
 cohort_heatmap(cohorts, "Taxable amount","Revenue Retention")
 
-
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ##CUSTOMER RETENTION TABLE
 
@@ -52,34 +52,56 @@ import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 import datetime as dt
+
 df = pd.read_excel('e:/cohort.xlsx')
 df['Service End'] = pd.to_datetime(df['Service End'])
 df = df[(df['Service End'] >= '2018-04-01') & (df['Service End'] < '2021-10-01')]
 
+df = df[['ID', 'Customer', 'Taxable amount', 'Service End']]
+df.columns = [i.strip().lower() for i in df.columns]
+df.head()
+
 def get_month(x): 
     return dt.datetime(x.year, x.month, 1) 
-df['TransactionMonth'] = df['Service End'].apply(get_month) 
-grouping = df.groupby('Customer')['TransactionMonth'] 
-df['CohortMonth'] = grouping.transform('min')
+df['transaction_month'] = df['service end'].apply(get_month)
+df.head()
+
+df['cohort_month'] = df.groupby('customer')['transaction_month'].transform('min')
+df.head()
+
 def get_date_int(dff, column):
     year = dff[column].dt.year
     month = dff[column].dt.month
     day = dff[column].dt.day
     return year, month, day
-transcation_year, transaction_month, _ = get_date_int(df, 'TransactionMonth')
-cohort_year, cohort_month, _ = get_date_int(df, 'CohortMonth')
+    
+transcation_year, transaction_month, _ = get_date_int(df, 'transaction_month')
+cohort_year, cohort_month, _ = get_date_int(df, 'cohort_month')    
+
 years_diff = transcation_year - cohort_year
 months_diff = transaction_month - cohort_month
-df['CohortIndex'] = years_diff * 12 + months_diff  + 1 
-grouping = df.groupby(['CohortMonth', 'CohortIndex'])
-cohort_data = grouping['Customer'].apply(pd.Series.nunique)
+
+df['cohort_index'] = years_diff * 12 + months_diff  + 1
+df
+
+cohort_data = df.groupby(['cohort_month', 'cohort_index'])['customer'].apply(pd.Series.nunique)
+cohort_data
+
 cohort_data = cohort_data.reset_index()
-cohort_counts = cohort_data.pivot(index='CohortMonth',
-                                 columns ='CohortIndex',
-                                 values = 'Customer')
+cohort_data.head()
+
+cohort_counts = cohort_data.pivot(index='cohort_month', columns ='cohort_index', values = 'customer')
+cohort_counts.head()
+
 cohort_sizes = cohort_counts.iloc[:,0]
-retention = cohort_counts.divide(cohort_sizes, axis=0)
-f = retention.round(3)*100
+cohort_sizes.head()
+
+retention = cohort_counts.divide(cohort_sizes, axis=0).round(3)*100
+retention.head()
+
+#WRITING TO AN EXCEL FILE
+
 excel = pd.ExcelWriter('Customer.xlsx', engine = 'xlsxwriter')
-f.to_excel(excel, sheet_name = 'Sheet1')
+retention.to_excel(excel, sheet_name = 'Sheet1')
 excel.save()
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
