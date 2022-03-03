@@ -1,0 +1,5 @@
+# install from url: https://www.java.com/en/download/
+# conda install -c conda-forge findspark
+
+import findspark as fs
+fs.init()
