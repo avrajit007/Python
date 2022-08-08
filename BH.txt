@@ -107,3 +107,7 @@ excel = pd.ExcelWriter('Customer.xlsx', engine = 'xlsxwriter')
 retention.to_excel(excel, sheet_name = 'Sheet1')
 excel.save()
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#WRITING TO CSV
+
+df.to_csv('C:/Users/Downloads/Pixalate/rawlogs000000000000.csv')
